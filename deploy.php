@@ -4,7 +4,7 @@
  
 if ( isset($_POST['payload']) && $_POST['payload'] ) {
 
-	$cmd = "ssh-add /c/Users/ur/.ssh/deploy && cd  /c/database-proj-xampp/htdocs && git pull";
+	$cmd = "ssh-add /c/Users/ur/.ssh/deploy && cd  /c/database-proj-xampp/htdocs && git pull origin master";
 
 	echo shell_exec("ssh-agent bash -c '$cmd'");
 }
