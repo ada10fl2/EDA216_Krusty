@@ -5,8 +5,11 @@
         <title>Krusty</title>
     </head>
     <body>
-        <?php
-            echo date("yyyy-MM-dd hh:mm");
-        ?>
+        <pre>
+            Date: 
+            <?php
+                echo date("yyyy-MM-dd hh:mm");
+            ?>
+        </pre>
     </body>
 </html>
