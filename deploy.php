@@ -10,7 +10,10 @@ $agent = "C:\\Program Files (x86)\\Git\\bin\\ssh-agent.exe";
 $bash =  "C:\\Program Files (x86)\\Git\\bin\\bash.exe";
 $exec = "\"$agent\" \"$bash\" -c $cmd 2>&1";
 echo "Runnning...\n<br>";
+$t0 = microtime(true);
 echo "<pre>$exec</pre>";
 echo shell_exec($exec);
-echo "<br>...Done!";
+$t = round(microtime(true) - $t0,3)*1000;
+echo "<br>Done: $t ms";
+
 ?>
