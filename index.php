@@ -8,7 +8,7 @@
         <pre>
             Date: 
             <?php
-                echo date("Y-M-d h:m");
+                echo date("Y-M-d h:m:s");
             ?>
         </pre>
     </body>
