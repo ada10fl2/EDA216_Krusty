@@ -1,21 +1,23 @@
 <?php $page = "pallets"; $title = "Pallets In Storage"; include "includes/header.php"; ?>
 	<h1><?= $title ?></h1>
 	<?php 
-	$startDate = getSafeParam('startdate', '2014-01-01');
-	$endDate = getSafeParam('enddate', '2015-01-01');
-	$productName = getSafeParam('productname', null);
-	$blocked = getSafeParam('blocked', null);
-	$pallets = $db->getPallets($startDate, $endDate, $productName, $blocked);
+		$startDate = getSafeParam('startdate', '2014-01-01');
+		$endDate = getSafeParam('enddate', '2015-01-01');
+		$productName = getSafeParam('productname', null);
+		$blocked = getSafeParam('blocked', null);
+		$pallets = $db->getPallets($startDate, $endDate, $productName, $blocked);
 	?>
 	<h3>Filter</h3>
 	<form>
 		<p>
-			<button type="button" class="btn btn-warning" onclick="document.location='pallets.php'">Reset</button>
 			Start date: <input type="date" name="startdate" value="<?php echo $startDate ?>"/>
 			End date: <input type="date" name="enddate" value="<?php echo $endDate ?>"/>
 			Product name: <input type="text" name="productname" value="<?php echo $productName ?>"/>
 			Blocked: <input type="checkbox" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
-			<input type="submit" class="btn btn-primary" title="Submit">
+		</p>
+		<p>
+			<input type="reset"  class="btn btn-warning" title="Reset">
+			<input type="submit" class="btn btn-success" title="Submit">
 		</p>
 	</form>
 	<table class="table table-striped pallet-table">
