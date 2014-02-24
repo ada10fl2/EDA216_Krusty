@@ -1,4 +1,4 @@
-<?php $page = "pallets"; $title = "Pallets in storage"; include "includes/header.php"; ?>
+<?php $title = "Pallets in storage"; include "includes/header.php"; ?>
 	<h1><?= $title ?></h1>
 	<?php 
 	$startDate = getSafeParam('startdate', '2000-01-01');
