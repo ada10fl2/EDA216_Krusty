@@ -23,7 +23,9 @@
 		<p>
 			<button type="reset"  class="btn btn-warning">Reset</button>
 			<button type="submit" class="btn btn-success">Submit</button>
-			<button type="button" class="btn btn-danger pull-right">Block Visible Pallets</button>
+			<a role="button" class="btn btn-danger pull-right" href="block.php?id=all&relocation=<?= url() ?>">
+				Block Visible Pallets
+			</a>
 		</p>
 	</form>
 	<table class="table table-striped pallet-table">
@@ -38,22 +40,27 @@
 		</thead>
 		<tbody>
 		<?php if(is_array($pallets)){
+			function isBlocked(&$pallet){
+				return (isset($pallet->state) && $pallet->state === "BLOCKED") ? TRUE : FALSE;
+			}
 		 	foreach ($pallets as $pallet) { ?>
-			<tr class='<?= (isset($pallet->state) && $pallet->state === "BLOCKED") ? "danger" : "" ?>'>
+			<tr class='<?= isBlocked($pallet) ? "danger" : "" ?>'>
 				<td><?= $pallet->palletId ?></td>
 				<td><?= $pallet->productName ?></td>
 				<td><?= $pallet->creationDate ?></td>
 				<td><?= $pallet->customerName ?></td>
 				<td class='state'><?= $pallet->state ?></td>
 				<td class='viewbutton'>
-					<button type="button" class="btn btn-default" 
-							onclick="document.location='showpallet.php?palletid=<?= $pallet->palletId ?>'">
+					<a 	role="button" 
+						class="btn btn-default" 
+						href="showpallet.php?palletid=<?= $pallet->palletId ?>">
 							View
-					</button>
-					<button type="button" class="btn btn-danger pull-right" 
-							onclick="document.location='blockpallet.php?palletid=<?= $pallet->palletId ?>'">
-							Block
-					</button>
+					</a>
+					<a 	role="button" 
+						class="btn <?= isBlocked($pallet) ? "btn-warning" : "btn-danger" ?> pull-right" 
+						href="block.php?id=<?= $pallet->palletId ?>&action=<?= isBlocked($pallet) ? "unblock" : "block" ?>&relocation=<?= url() ?>">
+							<?= isBlocked($pallet) ? "Unblock" : "Block" ?>
+					</a>
 				</td>
 			</tr>
 			<?php }
