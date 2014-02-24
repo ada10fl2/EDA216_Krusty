@@ -1,39 +1,42 @@
 <?php $page = "pallets"; $title = "Pallets In Storage"; include "includes/header.php"; ?>
 	<h1><?= $title ?></h1>
 	<?php 
-		$items= array( 
-			array("name" => "pallet1", "id" => 1, "product" => "Nut Rings"),
-			array("name" => "pallet2", "id" => 2, "product" => "Nut Rings"),
-			array("name" => "pallet3", "id" => 3, "product" => "Nut Rings", "state" => "blocked"),
-			array("name" => "pallet4", "id" => 4, "product" => "Nut Rings"),
-			array("name" => "pallet5", "id" => 5, "product" => "Nut Rings"),
-			array("name" => "pallet6", "id" => 6, "product" => "Nut Rings"),
-			array("name" => "pallet7", "id" => 7, "product" => "Nut Rings", "state" => "blocked") 
-		); 
-		function ifset(&$var){
-			if(isset($var)) return $var;
-			return "";
+	$startDate = (isset($_GET['startDate']) ? $_GET['startDate'] : null);
+	$endDate = (isset($_GET['endDate']) ? $_GET['endDate'] : null);
+	$pallets = [];
+		if ($startDate && $endDate) {
+			$pallets = $db->getPallets($startDate, $endDate);
 		}
-
 	?>
-	<table class="table table-striped table-hover">
+	<form>
+		<p>
+			Start date: <input type="date" name="startDate" value="<?php echo ($startDate ? $startDate : '2014-01-01') ?>"/>
+			End date: <input type="date" name="endDate" value="<?php echo ($endDate ? $endDate : '2015-01-01')  ?>"/>
+		</p>
+		<input type="submit" title="Submit">
+	</form>
+	<table class="table table-striped ">
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>Status</th>
-				<th>Name</th>
-				<th>Product</th>
+				<th>Date</th>
+				<th>State</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($items as $i){ ?>
-			<tr class='<?= isset($i['state']) && $i['state'] === "blocked" ? "danger" : "" ?>'>
-				<td><?= $i['id'] ?></td>
-				<td><?= ifset($i['state']) ?></td>
-				<td><?= $i['name'] ?></td>
-				<td><?= $i['product'] ?></td>
+		<?php if(is_array($pallets)){
+		 	foreach ($pallets as $pallet) { ?>
+			<tr class='<?= isset($pallet->state) && $pallet->state === "blocked" ? "danger" : "" ?>'>
+				<td><?= $pallet->palletId ?></td>
+				<td><?= $pallet->creationDate ?></td>
+				<td><?= $pallet->state ?></td>
+				<td><button type="button" class="btn btn-default" 
+							onclick="document.location='showpallet.php?palletid=<?= $pallet->palletId ?>'">View</button>
+				</td>
 			</tr>
-			<?php } ?>
+			<?php }
+		} ?>
 		</tbody>
 	</table>
 <?php include "includes/footer.php"; ?>
