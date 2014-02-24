@@ -10,11 +10,12 @@
 	<h3>Filter</h3>
 	<form>
 		<p>
+			<button type="button" class="btn btn-warning" onclick="document.location='pallets.php'">Reset</button>
 			Start date: <input type="date" name="startdate" value="<?php echo $startDate ?>"/>
 			End date: <input type="date" name="enddate" value="<?php echo $endDate ?>"/>
 			Product name: <input type="text" name="productname" value="<?php echo $productName ?>"/>
 			Blocked: <input type="checkbox" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
-			<input type="submit" title="Submit">
+			<input type="submit" class="btn btn-primary" title="Submit">
 		</p>
 	</form>
 	<table class="table table-striped ">
