@@ -8,6 +8,8 @@
  * 2) Write more functions.
  *
  */
+require_once('./database/pallet.php');
+
 class Database {
 	private $host;
 	private $userName;
@@ -101,10 +103,28 @@ class Database {
 			// die($error);
 	}
 
+	private function createPallets($pallets){
+		$output = [];
+		foreach ($pallets as $result) {
+			$pallet = new Pallet();
+			$pallet->palletId = $result['palletId'];
+			$pallet->creationDate = $result['creationDate'];
+			$pallet->state = $result['currentState'];
+			array_push($output, $pallet);
+		}
+		return $output;
+	}
+
 	public function getPallets($startDate, $endDate){
-		$sql = "SELECT palletId, creationDate FROM Pallets WHERE creationDate > ? AND creationDate < ?";
+		$sql = "SELECT palletId, creationDate FROM Pallets WHERE creationDate >= ? AND creationDate <= ?";
 		$results = $this->executeQuery($sql, array($startDate, $endDate));
-		echo $results;
+		return $this->createPallets($results);
+	}
+
+	public function getPallet($palletId){
+		$sql = "SELECT * FROM Pallets WHERE palletId = ?";
+		$results = $this->executeQuery($sql, array($palletId));
+		return $this->createPallets($results)[0];
 	}
 
 	public function getMovieNames() {
