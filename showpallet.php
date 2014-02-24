@@ -2,7 +2,7 @@
 	include "includes/header.php";
 	$palletId = getSafeParam('palletid');
 	if ($palletId) {
-		$pallet = $db->getPallet($palletId);
+		$pallet = $db->getPallet($palletId, null);
 	}
 	
 	?>
