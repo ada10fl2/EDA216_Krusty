@@ -1,18 +1,23 @@
 <?php $page = "pallets"; $title = "Pallets In Storage"; include "includes/header.php"; ?>
 	<h1><?= $title ?></h1>
 	<?php 
-		$startDate = getSafeParam('startdate', '2014-01-01');
-		$endDate = getSafeParam('enddate', '2015-01-01');
-		$productName = getSafeParam('productname', null);
-		$blocked = getSafeParam('blocked', null);
-		$pallets = $db->getPallets($startDate, $endDate, $productName, $blocked);
+	$startDate = getSafeParam('startdate', '2014-01-01');
+	$endDate = getSafeParam('enddate', '2015-01-01');
+	$productName = getSafeParam('productname', null);
+	$blocked = getSafeParam('blocked', null);
+	$pallets = $db->getPallets($startDate, $endDate, $productName, $blocked);
+	$products = $db->getProducts();
 	?>
 	<h3>Filter</h3>
 	<form>
 		<p>
 			Start date: <input type="date" name="startdate" value="<?php echo $startDate ?>"/>
 			End date: <input type="date" name="enddate" value="<?php echo $endDate ?>"/>
-			Product name: <input type="text" name="productname" value="<?php echo $productName ?>"/>
+			Product name: <select>
+			<?php foreach ($products as $product) { ?>
+			<option value="<?php echo $product; ?>"><?php echo $product; ?></option>
+			<?php } ?>
+			</select><input type="text" name="productname" value="<?php echo $productName ?>"/>
 			Blocked: <input type="checkbox" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
 		</p>
 		<p>
