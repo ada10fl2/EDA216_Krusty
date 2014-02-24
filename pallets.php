@@ -18,7 +18,7 @@
 			<input type="submit" class="btn btn-primary" title="Submit">
 		</p>
 	</form>
-	<table class="table table-striped ">
+	<table class="table table-striped pallet-table">
 		<thead>
 			<tr>
 				<th>#</th>
@@ -31,14 +31,17 @@
 		<tbody>
 		<?php if(is_array($pallets)){
 		 	foreach ($pallets as $pallet) { ?>
-			<tr class='<?= isset($pallet->state) && $pallet->state === "blocked" ? "danger" : "" ?>'>
+			<tr class='<?= (isset($pallet->state) && $pallet->state === "BLOCKED") ? "danger" : "" ?>'>
 				<td><?= $pallet->palletId ?></td>
 				<td><?= $pallet->productName ?></td>
 				<td><?= $pallet->creationDate ?></td>
 				<td><?= $pallet->customerName ?></td>
-				<td><?= $pallet->state ?></td>
-				<td><button type="button" class="btn btn-default" 
-							onclick="document.location='showpallet.php?palletid=<?= $pallet->palletId ?>'">View</button>
+				<td class='state'><?= $pallet->state ?></td>
+				<td class='viewbutton'>
+					<button type="button" class="btn btn-default" 
+							onclick="document.location='showpallet.php?palletid=<?= $pallet->palletId ?>'">
+							View
+					</button>
 				</td>
 			</tr>
 			<?php }

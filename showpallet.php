@@ -1,6 +1,6 @@
 <?php 
 	include "includes/header.php";
-	$palletId = getSafeParam('palletid');
+	$palletId = getSafeParam('palletid', FALSE);
 	if ($palletId) {
 		$pallet = $db->getPallet($palletId, null);
 	}
