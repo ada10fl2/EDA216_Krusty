@@ -1,10 +1,10 @@
 <?php $page = "pallets"; $title = "Pallets In Storage"; include "includes/header.php"; ?>
 	<h1><?= $title ?></h1>
 	<?php 
-	$startDate = $_GET['startDate'];
-	$endDate = $_GET['endDate'];
+	$startDate = (isset($_GET['startDate']) ? $_GET['startDate'] : null);
+	$endDate = (isset($_GET['endDate']) ? $_GET['endDate'] : null);
 		if ($startDate && $endDate) {
-		$pallets = $db->getPallets($startDate, $endDate);
+			$pallets = $db->getPallets($startDate, $endDate);
 		}
 	?>
 	<form>
@@ -24,7 +24,7 @@
 		</thead>
 		<tbody>
 
-			<?php if(is_array($pallets)){
+			<?php if($pallets && is_array($pallets)){
 			 	foreach ($pallets as $pallet) { ?>
 			<tr>
 				<td><?= $pallet->palletId ?></td>
