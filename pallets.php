@@ -1,5 +1,5 @@
-<?php $page = "pallets"; include "includes/header.php"; ?>
-	<h1>Pallets</h1>
+<?php $page = "pallets"; $title = "Pallets In Storage"; include "includes/header.php"; ?>
+	<h1><?= $title ?></h1>
 	<?php 
 		$items= array( 
 			array("name" => "pallet1", "id" => 1, "product" => "Nut Rings"),
