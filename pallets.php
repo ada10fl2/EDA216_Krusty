@@ -21,10 +21,12 @@
 	    <legend>Filter</legend>
 	    <form>
 		    <div class='row'>
-		    	<div class='col-sm-1'>    
+		    	<div class='col-sm-2'>    
 		            <div class='form-group'>
 		            	<label for="user_title">&nbsp</label>
-		    			<button type="reset" class="btn btn-warning form-control">Reset</button>
+		    			<button type="reset" class="btn btn-warning form-control">
+		    				Reset Values <span class="glyphicon glyphicon-trash"></span>
+	    				</button>
 		    		</div>
 		    	</div>
 		        <div class='col-sm-2'>    
@@ -70,7 +72,9 @@
 		        <div class='col-sm-1'>
 		            <div class='form-group'>
 		                <label for="user_lastname">&nbsp</label>
-		                <button type="submit" class="btn btn-primary">Submit</button>
+		                <button type="submit" class="btn btn-primary">
+		                	<span class="glyphicon glyphicon-search"></span> Search
+	                	</button>
 		            </div>
 		        </div>
 		    </div>
