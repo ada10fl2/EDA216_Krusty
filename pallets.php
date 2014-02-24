@@ -7,6 +7,12 @@
 	$blocked = getSafeParam('blocked', null);
 	$pallets = $db->getPallets($startDate, $endDate, $productName, $blocked);
 	$products = $db->getProducts();
+	$filter = array(
+		"startdate" => $startDate,
+		"enddate" => $endDate,
+		"productname" => $productName,
+		"blocked" => $blocked
+	);
 	?>
 	<h3>Filter</h3>
 	<form>
@@ -19,12 +25,13 @@
 			<option value="<?php echo $product; ?>" <?php echo $product == $productName ? "selected=\"yes\"" : ""; ?>><?php echo $product; ?></option>
 			<?php } ?>
 			</select>
-			Blocked: <input type="checkbox" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
+			Blocked: <input type="checkbox" name="blocked" value="true" <?= $blocked ? "checked" : "" ?> />
 		</p>
 		<p>
 			<button type="reset"  class="btn btn-warning">Reset</button>
 			<button type="submit" class="btn btn-success">Submit</button>
-			<a role="button" class="btn btn-danger pull-right" href="block.php?id=all&relocation=<?= url() ?>">
+			<a role="button" class="btn btn-danger pull-right" 
+				href="block.php?id=all&filter=<?= urlencode(base64_encode(serialize($filter))) ?>&action=block&relocation=<?= urlencode(url()) ?>">
 				Block Visible Pallets
 			</a>
 		</p>
