@@ -104,9 +104,8 @@
 		</thead>
 		<tbody>
 		<?php if(is_array($pallets)){
-			
 		 	foreach ($pallets as $pallet) { ?>
-			<tr class='<?= isBlocked($pallet) ? "danger" : "" ?>'>
+			<tr class='<?= $pallet->isBlocked() ? "danger" : "" ?>'>
 				<td><?= $pallet->palletId ?></td>
 				<td><?= $pallet->productName ?></td>
 				<td><?= $pallet->creationDate ?></td>
