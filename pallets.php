@@ -11,6 +11,7 @@
 	$filter = array(
 		"startdate" => $startDate,
 		"enddate" => $endDate,
+		"customer" => $customerName,
 		"productname" => $productName,
 		"blocked" => $blocked
 	);

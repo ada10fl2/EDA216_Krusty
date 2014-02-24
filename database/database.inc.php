@@ -119,8 +119,17 @@ class Database {
 	}
 
 	public function getPallets($startDate, $endDate, $productName, $blocked, $customer){
-		//Dat join
-		$sql = "SELECT Pallets.palletID, Pallets.creationDate, Pallets.currentState, Products.productName, Customers.customerName, LoadingOrders.loadingDate FROM pallets LEFT OUTER JOIN loadingOrderContents ON Pallets.palletId = loadingOrderContents.palletId LEFT OUTER JOIN LoadingOrders ON loadingOrderContents.loadingOrderlD = LoadingOrders.loadingOrderlD INNER JOIN products ON Products.productid = Pallets.productid INNER JOIN Orders ON Orders.orderID = Pallets.orderID INNER JOIN Customers ON Orders.customerID = Customers.customerID WHERE creationDate >= ? AND creationDate <= ?";
+		//Date join
+		$sql = "SELECT Pallets.palletID, Pallets.creationDate, "
+				."Pallets.currentState, Products.productName, "
+				."Customers.customerName, LoadingOrders.loadingDate "
+				."FROM pallets LEFT OUTER JOIN loadingOrderContents "
+				."ON Pallets.palletId = loadingOrderContents.palletId "
+				."LEFT OUTER JOIN LoadingOrders ON loadingOrderContents.loadingOrderlD = LoadingOrders.loadingOrderlD "
+				."INNER JOIN products ON Products.productid = Pallets.productid "
+				."INNER JOIN Orders ON Orders.orderID = Pallets.orderID "
+				."INNER JOIN Customers ON Orders.customerID = Customers.customerID "
+				."WHERE creationDate >= ? AND creationDate <= ?";
 		$parameters = [$startDate, $endDate];
 		if ($blocked) {
 			$sql = $sql." AND Pallets.currentState = 'BLOCKED'";
@@ -161,6 +170,49 @@ class Database {
 			array_push($output, $result['customerName']);
 		}
 		return $output;
+	}
+
+	public function blockQuery($filter){
+		$startDate = $filter['startdate'];
+		$endDate =   $filter['enddate'];
+		$blocked =   $filter['blocked'];
+		$product =   $filter['product'];
+		$customer =  $filter['customer'];
+		$sql = "SELECT Pallets.palletID as id FROM pallets LEFT OUTER JOIN loadingOrderContents "
+				."ON Pallets.palletId = loadingOrderContents.palletId "
+				."LEFT OUTER JOIN LoadingOrders ON loadingOrderContents.loadingOrderlD = LoadingOrders.loadingOrderlD "
+				."INNER JOIN products ON Products.productid = Pallets.productid "
+				."INNER JOIN Orders ON Orders.orderID = Pallets.orderID "
+				."INNER JOIN Customers ON Orders.customerID = Customers.customerID "
+				."WHERE creationDate >= ? AND creationDate <= ?";
+		$parameters = [$startDate, $endDate];
+		if ($blocked) {
+			$sql = $sql." AND Pallets.currentState = 'BLOCKED'";
+		}
+		if ($product) {
+			$sql = $sql." AND Products.productName = ?";
+			array_push($parameters, $product);
+		}
+		if ($customer) {
+			$sql = $sql." AND Customers.customerName = ?";
+			array_push($parameters, $customer);
+		}
+		$sql = $sql." ORDER BY Pallets.palletID";
+		$results = $this->executeQuery($sql, $parameters);
+		foreach($results as $row) {
+			if(isset($row['id'])) {
+				$id = $row['id'];
+				$this->executeUpdate("UPDATE pallets SET Pallets.currentState = 'BLOCKED' WHERE Pallets.palletId = ?", array($id));
+			}
+		}
+	}
+	
+	public function unblockSinglePallet($id){
+		$this->executeUpdate("UPDATE pallets SET Pallets.currentState = 'STORED' WHERE Pallets.palletId = ?", array($id));
+	}
+
+	public function blockSinglePallet($id){
+		$this->executeUpdate("UPDATE pallets SET Pallets.currentState = 'BLOCKED' WHERE Pallets.palletId = ?", array($id));
 	}
 }
 ?>
