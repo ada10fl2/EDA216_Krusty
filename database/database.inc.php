@@ -115,7 +115,7 @@ class Database {
 			$pallet->state = ifvarset($result['currentState'], "unknown");
 			$pallet->productName = ifvarset($result['productName'], "NULL");
 			$pallet->customerName = ifvarset($result['customerName'], "NULL");
-			$pallet->deliveryDate = ifvarset($result['loadingDate'], "NULL");
+			$pallet->deliveryDate = ifvarset($result['loadingDate'], "");
 			array_push($output, $pallet);
 		}
 		return $output;
