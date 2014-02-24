@@ -104,9 +104,7 @@
 		</thead>
 		<tbody>
 		<?php if(is_array($pallets)){
-			function isBlocked(&$pallet){
-				return (isset($pallet->state) && $pallet->state === "BLOCKED") ? TRUE : FALSE;
-			}
+			
 		 	foreach ($pallets as $pallet) { ?>
 			<tr class='<?= isBlocked($pallet) ? "danger" : "" ?>'>
 				<td><?= $pallet->palletId ?></td>
@@ -121,13 +119,13 @@
 						href="showpallet.php?id=<?= $pallet->palletId ?>">
 							Details
 					</a>
-					<?php if (!$pallet->deliveryDate){ $msg="Oh no, Cookie Monster is VERY hungry & took the whole pallet!" ?>
+					<?php if (is_null($pallet->deliveryDate)){ $msg="Oh no, Cookie Monster is VERY hungry & took the whole pallet!" ?>
 						<a 	role="button" class="btn btn-success" href="javascript:alert('<?= $msg; ?>');">Deliver</a>
 					<?php } ?>
 					<a 	role="button" 
-						class="btn <?= isBlocked($pallet) ? "btn-warning" : "btn-danger" ?> pull-right" 
-						href="block.php?id=<?= $pallet->palletId ?>&action=<?= isBlocked($pallet) ? "unblock" : "block" ?>&relocation=<?= url() ?>">
-							<?= isBlocked($pallet) ? "Unblock" : "Block" ?>
+						class="btn <?= $pallet->isBlocked() ? "btn-warning" : "btn-danger" ?> pull-right" 
+						href="block.php?id=<?= $pallet->palletId ?>&action=<?= $pallet->isBlocked() ? "unblock" : "block" ?>&relocation=<?= url() ?>">
+							<?= $pallet->isBlocked() ? "Unblock" : "Block" ?>
 							<span class="glyphicon glyphicon-remove-circle"></span>
 					</a>
 				</td>
