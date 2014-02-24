@@ -104,15 +104,18 @@ class Database {
 	}
 
 	private function createPallets($pallets){
+		function ifvarset(&$var, $default){
+			return isset($var) ? $var : $default;
+		}
 		$output = [];
 		foreach ($pallets as $result) {
 			$pallet = new Pallet();
-			$pallet->palletId = $result['palletID'];
-			$pallet->creationDate = $result['creationDate'];
-			$pallet->state = $result['currentState'];
-			$pallet->productName = $result['productName'];
-			$pallet->customerName = $result['customerName'];
-			$pallet->deliveryDate = $result['loadingDate'];
+			$pallet->palletId = ifvarset($result['palletID'], -1);
+			$pallet->creationDate = ifvarset($result['creationDate'], "2000-01-01");
+			$pallet->state = ifvarset($result['currentState'], "unknown");
+			$pallet->productName = ifvarset($result['productName'], "NULL");
+			$pallet->customerName = ifvarset($result['customerName'], "NULL");
+			$pallet->deliveryDate = ifvarset($result['loadingDate'], "NULL");
 			array_push($output, $pallet);
 		}
 		return $output;

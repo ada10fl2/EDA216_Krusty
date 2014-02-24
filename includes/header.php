@@ -14,7 +14,9 @@
 	function getSafeParam($paramName, $default){
 		return (isset($_GET[$paramName]) ? $_GET[$paramName] : $default);
 	}
-
+	function ifset(&$var){
+		if(isset($var)) echo $var;
+	}
 	function url() {
 		$pageURL = 'http';
 		if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {$pageURL .= "s";}

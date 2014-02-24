@@ -118,7 +118,7 @@
 				<td class='viewbutton'>
 					<a 	role="button" 
 						class="btn btn-default" 
-						href="showpallet.php?palletid=<?= $pallet->palletId ?>">
+						href="showpallet.php?id=<?= $pallet->palletId ?>">
 							Details
 					</a>
 					<?php if (!$pallet->deliveryDate){ $msg="Oh no, Cookie Monster is VERY hungry & took the whole pallet!" ?>
