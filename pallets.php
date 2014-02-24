@@ -16,8 +16,9 @@
 			Blocked: <input type="checkbox" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
 		</p>
 		<p>
-			<input type="reset"  class="btn btn-warning" title="Reset">
-			<input type="submit" class="btn btn-success" title="Submit">
+			<button type="reset"  class="btn btn-warning">Reset</button>
+			<button type="submit" class="btn btn-success">Submit</button>
+			<button type="button" class="btn btn-danger pull-right">Block Visible Pallets</button>
 		</p>
 	</form>
 	<table class="table table-striped pallet-table">
@@ -43,6 +44,10 @@
 					<button type="button" class="btn btn-default" 
 							onclick="document.location='showpallet.php?palletid=<?= $pallet->palletId ?>'">
 							View
+					</button>
+					<button type="button" class="btn btn-danger pull-right" 
+							onclick="document.location='blockpallet.php?palletid=<?= $pallet->palletId ?>'">
+							Block
 					</button>
 				</td>
 			</tr>
