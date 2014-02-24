@@ -3,6 +3,7 @@
 	<?php 
 	$startDate = (isset($_GET['startDate']) ? $_GET['startDate'] : null);
 	$endDate = (isset($_GET['endDate']) ? $_GET['endDate'] : null);
+	$pallets = [];
 		if ($startDate && $endDate) {
 			$pallets = $db->getPallets($startDate, $endDate);
 		}
@@ -24,7 +25,7 @@
 		</thead>
 		<tbody>
 
-			<?php if($pallets && is_array($pallets)){
+			<?php if(is_array($pallets)){
 			 	foreach ($pallets as $pallet) { ?>
 			<tr>
 				<td><?= $pallet->palletId ?></td>
