@@ -4,8 +4,9 @@
 	$startDate = getSafeParam('startdate', '2014-01-01');
 	$endDate = getSafeParam('enddate', '2015-01-01');
 	$productName = getSafeParam('productname', null);
+	$customerName = getSafeParam('customer', null);
 	$blocked = getSafeParam('blocked', null);
-	$pallets = $db->getPallets($startDate, $endDate, $productName, $blocked);
+	$pallets = $db->getPallets($startDate, $endDate, $productName, $blocked, $customerName);
 	$products = $db->getProducts();
 	$filter = array(
 		"startdate" => $startDate,
@@ -13,29 +14,72 @@
 		"productname" => $productName,
 		"blocked" => $blocked
 	);
+	$customers = $db->getCustomers();
 	?>
-	<h3>Filter</h3>
-	<form>
-		<p>
-			Start date: <input type="date" name="startdate" value="<?php echo $startDate ?>"/>
-			End date: <input type="date" name="enddate" value="<?php echo $endDate ?>"/>
-			Product name: <select name="productname">
-			<option value="">All products</option>
-			<?php foreach ($products as $product) { ?>
-			<option value="<?php echo $product; ?>" <?php echo $product == $productName ? "selected=\"yes\"" : ""; ?>><?php echo $product; ?></option>
-			<?php } ?>
-			</select>
-			Blocked: <input type="checkbox" name="blocked" value="true" <?= $blocked ? "checked" : "" ?> />
-		</p>
-		<p>
-			<button type="reset"  class="btn btn-warning">Reset</button>
-			<button type="submit" class="btn btn-success">Submit</button>
-			<a role="button" class="btn btn-danger pull-right" 
-				href="block.php?id=all&filter=<?= urlencode(base64_encode(serialize($filter))) ?>&action=block&relocation=<?= urlencode(url()) ?>">
-				Block Visible Pallets
-			</a>
-		</p>
-	</form>
+	<fieldset>
+	    <legend>Filter</legend>
+	    <form>
+		    <div class='row'>
+		    	<div class='col-sm-1'>    
+		            <div class='form-group'>
+		            	<label for="user_title">&nbsp</label>
+		    			<button type="reset" onclick="document.location='pallets.php'" class="btn btn-warning form-control">Reset</button>
+		    		</div>
+		    	</div>
+		        <div class='col-sm-2'>    
+		            <div class='form-group'>
+		                <label for="user_title">Start date</label>
+		                <input type="date" class="form-control" name="startdate" value="<?php echo $startDate ?>"/>
+		            </div>
+		        </div>
+		        <div class='col-sm-2'>
+		            <div class='form-group'>
+		                <label for="user_firstname">End date</label>
+		                <input type="date" class="form-control" name="enddate" value="<?php echo $endDate ?>"/>
+		            </div>
+		        </div>
+		        <div class='col-sm-2'>
+		            <div class='form-group'>
+		                <label for="user_lastname">Product name</label>
+		                <select class="form-control" name="productname">
+						<option value="">All products</option>
+						<?php foreach ($products as $product) { ?>
+						<option value="<?php echo $product; ?>" <?php echo $product == $productName ? "selected=\"yes\"" : ""; ?>><?php echo $product; ?></option>
+						<?php } ?>
+						</select>
+		        	</div>
+		        </div>
+		        <div class='col-sm-2'>
+		            <div class='form-group'>
+		                <label for="user_lastname">Customers</label>
+		                <select class="form-control" name="customer">
+					<option value="">All customers</option>
+					<?php foreach ($customers as $customer) { ?>
+					<option value="<?php echo $customer; ?>" <?php echo $customer == $customerName ? "selected=\"yes\"" : ""; ?>><?php echo $customer; ?></option>
+					<?php } ?>
+					</select>
+		            </div>
+		        </div>
+		        <div class='col-sm-1'>
+		            <div class='form-group'>
+		                <label for="user_lastname">Blocked</label>
+		                <input type="checkbox" class="form-control" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
+		            </div>
+		        </div>
+		        <div class='col-sm-1'>
+		            <div class='form-group'>
+		                <label for="user_lastname">&nbsp</label>
+		                <button type="submit" class="btn btn-success">Submit</button>
+		            </div>
+		        </div>
+		    </div>
+	    </form>
+	</fieldset>
+	<legend>Result</legend>
+	<a role="button" class="btn btn-danger pull-right" 
+		href="block.php?id=all&filter=<?= urlencode(base64_encode(serialize($filter))) ?>&action=block&relocation=<?= urlencode(url()) ?>">
+		Block Visible Pallets
+	</a>
 	<table class="table table-striped pallet-table">
 		<thead>
 			<tr>
@@ -57,7 +101,7 @@
 				<td><?= $pallet->palletId ?></td>
 				<td><?= $pallet->productName ?></td>
 				<td><?= $pallet->creationDate ?></td>
-				<td><?= ($pallet ? $pallet->deliveryDate : "Not delivered") ?></td>
+				<td><?= ($pallet->deliveryDate ? $pallet->deliveryDate : "Not delivered") ?></td>
 				<td><?= $pallet->customerName ?></td>
 				<td class='state'><?= $pallet->state ?></td>
 				<td class='viewbutton'>
@@ -77,4 +121,5 @@
 		} ?>
 		</tbody>
 	</table>
+</div>
 <?php include "includes/footer.php"; ?>
