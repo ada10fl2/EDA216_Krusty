@@ -11,30 +11,66 @@
 	$customers = $db->getCustomers();
 	?>
 	<h3>Filter</h3>
-	<form>
-		<p>
-			Start date: <input type="date" name="startdate" value="<?php echo $startDate ?>"/>
-			End date: <input type="date" name="enddate" value="<?php echo $endDate ?>"/>
-			Product name: <select name="productname">
+
+	<fieldset>
+    <legend>Filter</legend>
+    <form>
+    <div class='row'>
+    	<div class='col-sm-1'>    
+            <div class='form-group'>
+            	<label for="user_title">&nbsp</label>
+    			<button type="reset" onclick="document.location='pallets.php'" class="btn btn-warning form-control">Reset</button>
+    		</div>
+    	</div>
+        <div class='col-sm-2'>    
+            <div class='form-group'>
+                <label for="user_title">Start date</label>
+                <input type="date" class="form-control" name="startdate" value="<?php echo $startDate ?>"/>
+            </div>
+        </div>
+        <div class='col-sm-2'>
+            <div class='form-group'>
+                <label for="user_firstname">End date</label>
+                <input type="date" class="form-control" name="enddate" value="<?php echo $endDate ?>"/>
+            </div>
+        </div>
+        <div class='col-sm-2'>
+            <div class='form-group'>
+                <label for="user_lastname">Product name</label>
+                <select class="form-control" name="productname">
 			<option value="">All products</option>
 			<?php foreach ($products as $product) { ?>
 			<option value="<?php echo $product; ?>" <?php echo $product == $productName ? "selected=\"yes\"" : ""; ?>><?php echo $product; ?></option>
 			<?php } ?>
 			</select>
-			Customers: <select name="customer">
+            </div>
+        </div>
+        <div class='col-sm-2'>
+            <div class='form-group'>
+                <label for="user_lastname">Customers</label>
+                <select class="form-control" name="customer">
 			<option value="">All customers</option>
 			<?php foreach ($customers as $customer) { ?>
 			<option value="<?php echo $customer; ?>" <?php echo $customer == $customerName ? "selected=\"yes\"" : ""; ?>><?php echo $customer; ?></option>
 			<?php } ?>
 			</select>
-			Blocked: <input type="checkbox" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
-			<button type="reset" onclick="document.location='pallets.php'" class="btn btn-warning">Reset</button>
-			<button type="submit" class="btn btn-success">Submit</button>
-		</p>
-		<p>
-			<button type="button" class="btn btn-danger pull-right">Block Visible Pallets</button>
-		</p>
-	</form>
+            </div>
+        </div>
+        <div class='col-sm-2'>
+            <div class='form-group'>
+                <label for="user_lastname">Blocked</label>
+                <input type="checkbox" class="form-control" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
+            </div>
+        </div>
+        <div class='col-sm-1'>
+            <div class='form-group'>
+                <label for="user_lastname">&nbsp</label>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</fieldset>
 	<table class="table table-striped pallet-table">
 		<thead>
 			<tr>
@@ -71,4 +107,5 @@
 		} ?>
 		</tbody>
 	</table>
+</div>
 <?php include "includes/footer.php"; ?>
