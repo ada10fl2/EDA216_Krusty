@@ -120,7 +120,6 @@ class Database {
 	public function getPallets($startDate, $endDate, $productName, $blocked){
 		//Dat join
 		$sql = "SELECT * FROM pallets INNER JOIN products ON Products.productid = Pallets.productid INNER JOIN Orders ON Orders.orderID = Pallets.orderID INNER JOIN Customers ON Orders.customerID = Customers.customerID WHERE creationDate >= ? AND creationDate <= ?";
-		echo "Yes".$blocked;
 		if ($blocked) {
 			$sql = $sql." AND Pallets.currentState = 'BLOCKED'";
 		}
