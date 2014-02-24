@@ -10,7 +10,8 @@
 		$prodid= $db->getProductIDFromProductName($productName);
 		$splitorder = explode('-', $order);
 		if(count($splitorder) === 2){
-			$db->createPallet($prodid, $splitorder[1], ($blocked ? "BLOCKED": ""), $pdate);
+                        $state = ($blocked ? "BLOCKED": "STORED");
+			$db->createPallet($prodid, $splitorder[1], $state, $pdate);
 		}
 	}
 	$products = $db->getProducts();
