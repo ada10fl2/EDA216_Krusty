@@ -112,6 +112,7 @@ class Database {
 			$pallet->state = $result['currentState'];
 			$pallet->productName = $result['productName'];
 			$pallet->customerName = $result['customerName'];
+			$pallet->deliveryDate = $result['loadingDate'];
 			array_push($output, $pallet);
 		}
 		return $output;
@@ -119,7 +120,7 @@ class Database {
 
 	public function getPallets($startDate, $endDate, $productName, $blocked){
 		//Dat join
-		$sql = "SELECT * FROM pallets INNER JOIN products ON Products.productid = Pallets.productid INNER JOIN Orders ON Orders.orderID = Pallets.orderID INNER JOIN Customers ON Orders.customerID = Customers.customerID WHERE creationDate >= ? AND creationDate <= ?";
+		$sql = "SELECT Pallets.palletID, Pallets.creationDate, Pallets.currentState, Products.productName, Customers.customerName, LoadingOrders.loadingDate FROM pallets LEFT OUTER JOIN loadingOrderContents ON Pallets.palletId = loadingOrderContents.palletId LEFT OUTER JOIN LoadingOrders ON loadingOrderContents.loadingOrderlD = LoadingOrders.loadingOrderlD INNER JOIN products ON Products.productid = Pallets.productid INNER JOIN Orders ON Orders.orderID = Pallets.orderID INNER JOIN Customers ON Orders.customerID = Customers.customerID WHERE creationDate >= ? AND creationDate <= ? ORDER BY Pallets.palletID";
 		if ($blocked) {
 			$sql = $sql." AND Pallets.currentState = 'BLOCKED'";
 		}
