@@ -52,6 +52,6 @@
 	</div>
 	</div>
 
-    <div class="container">
+    <div class="container" style="margin-top: 60px;">
       <div class="starter-template">
       <!-- content goes here -->
