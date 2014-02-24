@@ -14,8 +14,8 @@
 			End date: <input type="date" name="enddate" value="<?php echo $endDate ?>"/>
 			Product name: <input type="text" name="productname" value="<?php echo $productName ?>"/>
 			Blocked: <input type="checkbox" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
+			<input type="submit" title="Submit">
 		</p>
-		<input type="submit" title="Submit">
 	</form>
 	<table class="table table-striped ">
 		<thead>
