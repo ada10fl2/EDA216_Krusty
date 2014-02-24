@@ -100,18 +100,11 @@ class Database {
 			// $error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
 			// die($error);
 	}
-	
-	/**
-	 * Check if a user with the specified user id exists in the database.
-	 * Queries the Users database table.
-	 *
-	 * @param userId The user id 
-	 * @return true if the user exists, false otherwise.
-	 */
-	public function userExists($userId) {
-		$sql = "select userName from Users where userName = ?";
-		$result = $this->executeQuery($sql, array($userId));
-		return count($result) == 1; 
+
+	public function getPallets($startDate, $endDate){
+		$sql = "SELECT palletId, creationDate FROM Pallets WHERE creationDate > ? AND creationDate < ?";
+		$results = $this->executeQuery($sql, array($startDate, $endDate));
+		echo $results;
 	}
 
 	public function getMovieNames() {
