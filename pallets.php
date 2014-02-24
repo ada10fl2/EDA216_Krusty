@@ -1,8 +1,8 @@
 <?php $page = "pallets"; $title = "Pallets In Storage"; include "includes/header.php"; ?>
 	<h1><?= $title ?></h1>
 	<?php 
-	$startDate = (isset($_GET['startDate']) ? $_GET['startDate'] : null);
-	$endDate = (isset($_GET['endDate']) ? $_GET['endDate'] : null);
+	$startDate = getSafeParam('startdate');
+	$endDate = getSafeParam('enddate');
 	$pallets = [];
 		if ($startDate && $endDate) {
 			$pallets = $db->getPallets($startDate, $endDate);
@@ -10,8 +10,8 @@
 	?>
 	<form>
 		<p>
-			Start date: <input type="date" name="startDate" value="<?php echo ($startDate ? $startDate : '2014-01-01') ?>"/>
-			End date: <input type="date" name="endDate" value="<?php echo ($endDate ? $endDate : '2015-01-01')  ?>"/>
+			Start date: <input type="date" name="startdate" value="<?php echo ($startDate ? $startDate : '2014-01-01') ?>"/>
+			End date: <input type="date" name="enddate" value="<?php echo ($endDate ? $endDate : '2015-01-01')  ?>"/>
 		</p>
 		<input type="submit" title="Submit">
 	</form>
