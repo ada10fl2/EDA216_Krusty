@@ -37,7 +37,7 @@ class Database {
 	 */
 	public function openConnection() {
 		try {
-			$this->conn = new PDO("mysql:host=$this->host;dbname=$this->database", 
+			$this->conn = new PDO("mysql:host=$this->host;dbname=$this->database;charset=utf8", 
 				$this->userName,  $this->password);
 			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
@@ -111,13 +111,15 @@ class Database {
 			$pallet->creationDate = $result['creationDate'];
 			$pallet->state = $result['currentState'];
 			$pallet->productName = $result['productName'];
+			$pallet->customerName = $result['customerName'];
 			array_push($output, $pallet);
 		}
 		return $output;
 	}
 
 	public function getPallets($startDate, $endDate){
-		$sql = "SELECT * FROM pallets INNER JOIN products ON Products.productid = Pallets.productid WHERE creationDate >= ? AND creationDate <= ?";
+		//Dat join
+		$sql = "SELECT * FROM pallets INNER JOIN products ON Products.productid = Pallets.productid INNER JOIN Orders ON Orders.orderID = Pallets.orderID INNER JOIN Customers ON Orders.customerID = Customers.customerID WHERE creationDate >= ? AND creationDate <= ?";
 		$results = $this->executeQuery($sql, array($startDate, $endDate));
 		return $this->createPallets($results);
 	}
@@ -127,46 +129,5 @@ class Database {
 		$results = $this->executeQuery($sql, array($palletId));
 		return $this->createPallets($results)[0];
 	}
-
-	public function getMovieNames() {
-		$sql = "select name from Movies";
-		$results = $this->executeQuery($sql);
-		$output = [];
-		foreach ($results as $result) {
-			array_push($output, $result["name"]);
-		}
-		return $output; 
-	}
-
-	public function getShowDates($movieName){
-		$sql = "SELECT showDate FROM Shows WHERE movieName = ?";
-		$results = $this->executeQuery($sql, array($movieName));
-		$output = [];
-		foreach ($results as $result) {
-			array_push($output, $result["showDate"]);
-		}
-		return $output; 
-	}
-
-	public function getShow($movieName, $showDate){
-		$sql = "SELECT * FROM Shows WHERE movieName = ? AND showDate = ?";
-		$results = $this->executeQuery($sql, array($movieName, $showDate));
-		return $results[0];
-	}
-
-	public function makeBooking($userId, $showId){
-		$sql = "INSERT INTO Reservations VALUES (null, ?, ?)";
-		$error = $this->executeUpdate($sql, array($userId,$showId));
-		if (!is_null($error)) {
-			return ['error' => $error];
-		}
-		$sql_fetch = "SELECT resNbr FROM Reservations WHERE userName = ? AND showId = ?";
-		$results = $this->executeQuery($sql_fetch, array($userId,$showId));
-		return end($results);
-	}
-
-	/*
-	 * *** Add functions ***
-	 */
 }
 ?>

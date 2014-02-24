@@ -32,7 +32,7 @@
 				<td><?= $pallet->palletId ?></td>
 				<td><?= $pallet->productName ?></td>
 				<td><?= $pallet->creationDate ?></td>
-				<td>Nope.avi</td>
+				<td><?= $pallet->customerName ?></td>
 				<td><?= $pallet->state ?></td>
 				<td><button type="button" class="btn btn-default" 
 							onclick="document.location='showpallet.php?palletid=<?= $pallet->palletId ?>'">View</button>
