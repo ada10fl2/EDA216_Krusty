@@ -5,3 +5,8 @@ fuel/app/cache/*/*
 /nbproject/private/
 
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
