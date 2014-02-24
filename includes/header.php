@@ -11,8 +11,8 @@
 
 	$projectname = "Krusty Cookies AB";
 
-	function getSafeParam($paramName){
-		return (isset($_GET[$paramName]) ? $_GET[$paramName] : null);;
+	function getSafeParam($paramName, $default){
+		return (isset($_GET[$paramName]) ? $_GET[$paramName] : $default);;
 	}
 ?>
 

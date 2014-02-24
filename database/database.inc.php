@@ -117,10 +117,19 @@ class Database {
 		return $output;
 	}
 
-	public function getPallets($startDate, $endDate){
+	public function getPallets($startDate, $endDate, $productName, $blocked){
 		//Dat join
 		$sql = "SELECT * FROM pallets INNER JOIN products ON Products.productid = Pallets.productid INNER JOIN Orders ON Orders.orderID = Pallets.orderID INNER JOIN Customers ON Orders.customerID = Customers.customerID WHERE creationDate >= ? AND creationDate <= ?";
-		$results = $this->executeQuery($sql, array($startDate, $endDate));
+		echo "Yes".$blocked;
+		if ($blocked) {
+			$sql = $sql." AND Pallets.currentState = 'BLOCKED'";
+		}
+		if ($productName) {
+			$sql = $sql." AND Products.productName = ?";
+			
+			$results = $this->executeQuery($sql, array($startDate, $endDate, $productName));
+		} else 
+			$results = $this->executeQuery($sql, array($startDate, $endDate));
 		return $this->createPallets($results);
 	}
 

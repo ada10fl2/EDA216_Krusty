@@ -1,17 +1,19 @@
 <?php $page = "pallets"; $title = "Pallets In Storage"; include "includes/header.php"; ?>
 	<h1><?= $title ?></h1>
 	<?php 
-	$startDate = getSafeParam('startdate');
-	$endDate = getSafeParam('enddate');
-	$pallets = [];
-		if ($startDate && $endDate) {
-			$pallets = $db->getPallets($startDate, $endDate);
-		}
+	$startDate = getSafeParam('startdate', '2014-01-01');
+	$endDate = getSafeParam('enddate', '2015-01-01');
+	$productName = getSafeParam('productname', null);
+	$blocked = getSafeParam('blocked', null);
+	$pallets = $db->getPallets($startDate, $endDate, $productName, $blocked);
 	?>
+	<h3>Filter</h3>
 	<form>
 		<p>
-			Start date: <input type="date" name="startdate" value="<?php echo ($startDate ? $startDate : '2014-01-01') ?>"/>
-			End date: <input type="date" name="enddate" value="<?php echo ($endDate ? $endDate : '2015-01-01')  ?>"/>
+			Start date: <input type="date" name="startdate" value="<?php echo $startDate ?>"/>
+			End date: <input type="date" name="enddate" value="<?php echo $endDate ?>"/>
+			Product name: <input type="text" name="productname" value="<?php echo $productName ?>"/>
+			Blocked: <input type="checkbox" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
 		</p>
 		<input type="submit" title="Submit">
 	</form>
