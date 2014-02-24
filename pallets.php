@@ -77,9 +77,15 @@
 	    </form>
 	</fieldset>
 	<legend>Results</legend>
+	<a role="button" class="btn btn-success pull-left" 
+		href="createpallet.php">
+		<span class="glyphicon glyphicon-plus"></span>
+		Register Pallet
+	</a>
 	<a role="button" class="btn btn-danger pull-right" 
 		href="block.php?id=all&filter=<?= urlencode(base64_encode(serialize($filter))) ?>&action=block&relocation=<?= urlencode(url()) ?>">
 		Block Visible Pallets
+		<span class="glyphicon glyphicon-ban-circle"></span>
 	</a>
 	<table class="table table-striped pallet-table">
 		<thead>
@@ -109,15 +115,16 @@
 					<a 	role="button" 
 						class="btn btn-default" 
 						href="showpallet.php?palletid=<?= $pallet->palletId ?>">
-							View
+							Details
 					</a>
-					<?php if (!$pallet->deliveryDate){ ?>
-						<a 	role="button" class="btn btn-success" href="javascript:alert('Not implemented, you fool!');">Deliver</a>
+					<?php if (!$pallet->deliveryDate){ $msg="Oh no, Cookie Monster is VERY hungry & took the whole pallet!" ?>
+						<a 	role="button" class="btn btn-success" href="javascript:alert('<?= $msg; ?>');">Deliver</a>
 					<?php } ?>
 					<a 	role="button" 
 						class="btn <?= isBlocked($pallet) ? "btn-warning" : "btn-danger" ?> pull-right" 
 						href="block.php?id=<?= $pallet->palletId ?>&action=<?= isBlocked($pallet) ? "unblock" : "block" ?>&relocation=<?= url() ?>">
 							<?= isBlocked($pallet) ? "Unblock" : "Block" ?>
+							<span class="glyphicon glyphicon-remove-circle"></span>
 					</a>
 				</td>
 			</tr>
