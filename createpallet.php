@@ -18,55 +18,48 @@
 	$orders = $db->getCustomerOrders();
 	?>
 		<fieldset>
-	    <form>
-		    <div class='row'>
-		    	<div class='col-sm-2'>   
-		    		<div class='form-group'>
-						<label>Products:</label>
-						<select type="select" class="form-control" name="product">
+	    <form class="form-horizontal col-xs-6 well well-lg" role="form">
+		    <div class='form-group'>
+				<label class="col-sm-4 control-label">Products:</label>
+				<div class="col-sm-8">
+					<select type="select" class="form-control" name="product">
+					<?php
+						foreach ($products as $prod) { ?>
+							<option><?= $prod ?></option>
+					<?php } ?>
+					</select>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class="col-sm-4 control-label">Production Date:</label>
+				<div class="col-sm-8">
+		 			<input type="text" class="form-control" name="pdate"  value="<?= $prodDate ?>"/>
+		 		</div>
+			</div>
+			<div class='form-group'>
+				<label class="col-sm-4 control-label">Order:</label>
+				<div class="col-sm-8">
+					<select type="select" class="form-control" name="order">
 						<?php
-							foreach ($products as $prod) { ?>
-								<option><?= $prod ?></option>
+							foreach ($orders as $ord) { ?>
+								<option><?= $ord ?></option>
 						<?php } ?>
-						</select>
-					</div>
+					</select>
 				</div>
 			</div>
-			<div class='row'>
-				<div class='col-sm-2'>  
-					<div class='form-group'>
-						<label>Production Date:</label>
-				 		<input type="text" name="pdate" value="<?php echo $prodDate ?>"/>
-					</div>
+			<div class='form-group'>
+				<label class="col-sm-4 control-label">Blocked:</label>
+				<div class="col-sm-2">
+					<input type="checkbox" class="form-control checkboxfix" name="blocked" value="true"/>
+				</div>
+				<div class="col-sm-6"></div>
+			</div>
+			<div class='form-group'>
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary btn-lg pull-right" title="Submit">
 				</div>
 			</div>
-			<div class='row'>
-				<div class='col-sm-2'>  
-					<div class='form-group'>
-						<label>Order:</label>
-							<select type="select" class="form-control" name="order">
-							<?php
-								foreach ($orders as $ord) { ?>
-									<option><?= $ord ?></option>
-							<?php } ?>
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class='row'>
-				<div class='col-sm-2'>  
-					<div class='form-group'>
-						<label>Blocked:</label>
-						<input type="checkbox" name="blocked" value="true"/><br>
-					</div>
-				</div>
-			</div>
-			<div class='row'>
-				<div class='col-sm-2'>  
-					<div class='form-group'>
-						<input type="submit" class="btn btn-primary" title="Submit">
-					</div>
-				</div>
 		</div>
 	</form>
 </fieldset>

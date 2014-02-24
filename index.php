@@ -18,32 +18,23 @@
 	$customers = $db->getCustomers();
 	?>
 	<fieldset>
-	    <legend>Filter</legend>
 	    <form>
 		    <div class='row'>
 		    	<div class='col-sm-2'>    
 		            <div class='form-group'>
-		            	<label for="user_title">&nbsp</label>
-		    			<button type="reset" class="btn btn-warning form-control">
-		    				Reset Values <span class="glyphicon glyphicon-trash"></span>
-	    				</button>
-		    		</div>
-		    	</div>
-		        <div class='col-sm-2'>    
-		            <div class='form-group'>
-		                <label for="user_title">Start date</label>
+		                <label>Start date</label>
 		                <input type="date" class="form-control" name="startdate" value="<?= $startDate ?>"/>
 		            </div>
 		        </div>
 		        <div class='col-sm-2'>
 		            <div class='form-group'>
-		                <label for="user_firstname">End date</label>
+		                <label>End date</label>
 		                <input type="date" class="form-control" name="enddate" value="<?= $endDate ?>"/>
 		            </div>
 		        </div>
 		        <div class='col-sm-2'>
 		            <div class='form-group'>
-		                <label for="user_lastname">Product name</label>
+		                <label>Product name</label>
 		                <select class="form-control" name="productname">
 							<option value="">All products</option>
 							<?php foreach ($products as $product) { ?>
@@ -54,7 +45,7 @@
 		        </div>
 		        <div class='col-sm-2'>
 		            <div class='form-group'>
-		                <label for="user_lastname">Customers</label>
+		                <label>Customers</label>
 		                <select class="form-control" name="customer">
 							<option value="">All customers</option>
 							<?php foreach ($customers as $customer) { ?>
@@ -65,18 +56,28 @@
 		        </div>
 		        <div class='col-sm-1'>
 		            <div class='form-group'>
-		                <label for="user_lastname">Blocked</label>
+		                <label>Blocked</label>
 		                <input type="checkbox" class="form-control checkboxfix" name="blocked" value="true" <?= $blocked ? "checked" : ""; ?> />
 		            </div>
 		        </div>
+				<div class='col-sm-1'>
+		            <div class='form-group actionbuttons'>
+		            	<label>Reset</label>
+				        <button id="_reset_btn" type="reset" class="btn btn-default">
+		    				<span class="glyphicon glyphicon-trash"></span> Reset 
+						</button>
+		    		</div>
+		    	</div>
 		        <div class='col-sm-1'>
-		            <div class='form-group'>
-		                <label for="user_lastname">&nbsp</label>
-		                <button type="submit" class="btn btn-primary">
+		            <div class='form-group actionbuttons'>
+		            	<label>Submit</label>
+		                <button id="_search_btn" type="submit" class="btn btn-primary expandw">
 		                	<span class="glyphicon glyphicon-search"></span> Search
 	                	</button>
-		            </div>
-		        </div>
+		    		</div>
+		    	</div>
+
+		    	
 		    </div>
 	    </form>
 	</fieldset>
@@ -123,7 +124,7 @@
 					<?php } ?>
 					<a 	role="button" 
 						class="btn <?= $pallet->isBlocked() ? "btn-warning" : "btn-danger" ?> pull-right" 
-						href="block.php?id=<?= $pallet->palletId ?>&action=<?= $pallet->isBlocked() ? "unblock" : "block" ?>&relocation=<?= url() ?>">
+						href="block.php?id=<?= $pallet->palletId ?>&action=<?= $pallet->isBlocked() ? "unblock" : "block" ?>&relocation=<?= urlencode(url()) ?>">
 							<?= $pallet->isBlocked() ? "Unblock" : "Block" ?>
 							<span class="glyphicon glyphicon-remove-circle"></span>
 					</a>

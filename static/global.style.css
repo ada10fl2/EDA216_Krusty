@@ -6,3 +6,6 @@
 .checkboxfix{
 	margin: 0px 0px 0px 0px !important;
 }
+.actionbuttons label {
+	visibility:hidden;
+}
