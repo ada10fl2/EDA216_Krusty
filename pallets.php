@@ -4,9 +4,11 @@
 	$startDate = getSafeParam('startdate', '2014-01-01');
 	$endDate = getSafeParam('enddate', '2015-01-01');
 	$productName = getSafeParam('productname', null);
+	$customerName = getSafeParam('customer', null);
 	$blocked = getSafeParam('blocked', null);
-	$pallets = $db->getPallets($startDate, $endDate, $productName, $blocked);
+	$pallets = $db->getPallets($startDate, $endDate, $productName, $blocked, $customerName);
 	$products = $db->getProducts();
+	$customers = $db->getCustomers();
 	?>
 	<h3>Filter</h3>
 	<form>
@@ -19,11 +21,17 @@
 			<option value="<?php echo $product; ?>" <?php echo $product == $productName ? "selected=\"yes\"" : ""; ?>><?php echo $product; ?></option>
 			<?php } ?>
 			</select>
+			Customers: <select name="customer">
+			<option value="">All customers</option>
+			<?php foreach ($customers as $customer) { ?>
+			<option value="<?php echo $customer; ?>" <?php echo $customer == $customerName ? "selected=\"yes\"" : ""; ?>><?php echo $customer; ?></option>
+			<?php } ?>
+			</select>
 			Blocked: <input type="checkbox" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
+			<button type="reset" onclick="document.location='pallets.php'" class="btn btn-warning">Reset</button>
+			<button type="submit" class="btn btn-success">Submit</button>
 		</p>
 		<p>
-			<button type="reset"  class="btn btn-warning">Reset</button>
-			<button type="submit" class="btn btn-success">Submit</button>
 			<button type="button" class="btn btn-danger pull-right">Block Visible Pallets</button>
 		</p>
 	</form>
@@ -45,7 +53,7 @@
 				<td><?= $pallet->palletId ?></td>
 				<td><?= $pallet->productName ?></td>
 				<td><?= $pallet->creationDate ?></td>
-				<td><?= ($pallet ? $pallet->deliveryDate : "Not delivered") ?></td>
+				<td><?= ($pallet->deliveryDate ? $pallet->deliveryDate : "Not delivered") ?></td>
 				<td><?= $pallet->customerName ?></td>
 				<td class='state'><?= $pallet->state ?></td>
 				<td class='viewbutton'>

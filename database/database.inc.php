@@ -118,19 +118,23 @@ class Database {
 		return $output;
 	}
 
-	public function getPallets($startDate, $endDate, $productName, $blocked){
+	public function getPallets($startDate, $endDate, $productName, $blocked, $customer){
 		//Dat join
-		$sql = "SELECT Pallets.palletID, Pallets.creationDate, Pallets.currentState, Products.productName, Customers.customerName, LoadingOrders.loadingDate FROM pallets LEFT OUTER JOIN loadingOrderContents ON Pallets.palletId = loadingOrderContents.palletId LEFT OUTER JOIN LoadingOrders ON loadingOrderContents.loadingOrderlD = LoadingOrders.loadingOrderlD INNER JOIN products ON Products.productid = Pallets.productid INNER JOIN Orders ON Orders.orderID = Pallets.orderID INNER JOIN Customers ON Orders.customerID = Customers.customerID WHERE creationDate >= ? AND creationDate <= ? ORDER BY Pallets.palletID";
+		$sql = "SELECT Pallets.palletID, Pallets.creationDate, Pallets.currentState, Products.productName, Customers.customerName, LoadingOrders.loadingDate FROM pallets LEFT OUTER JOIN loadingOrderContents ON Pallets.palletId = loadingOrderContents.palletId LEFT OUTER JOIN LoadingOrders ON loadingOrderContents.loadingOrderlD = LoadingOrders.loadingOrderlD INNER JOIN products ON Products.productid = Pallets.productid INNER JOIN Orders ON Orders.orderID = Pallets.orderID INNER JOIN Customers ON Orders.customerID = Customers.customerID WHERE creationDate >= ? AND creationDate <= ?";
+		$parameters = [$startDate, $endDate];
 		if ($blocked) {
 			$sql = $sql." AND Pallets.currentState = 'BLOCKED'";
 		}
 		if ($productName) {
 			$sql = $sql." AND Products.productName = ?";
-			
-			$results = $this->executeQuery($sql, array($startDate, $endDate, $productName));
-		} else 
-			$results = $this->executeQuery($sql, array($startDate, $endDate));
-		return $this->createPallets($results);
+			array_push($parameters, $productName);
+		}
+		if ($customer) {
+			$sql = $sql." AND Customers.customerName = ?";
+			array_push($parameters, $customer);
+		}
+		$sql = $sql." ORDER BY Pallets.palletID";
+		return $this->createPallets($this->executeQuery($sql,$parameters));
 	}
 
 	public function getPallet($palletId){
@@ -145,6 +149,16 @@ class Database {
 		$output = [];
 		foreach ($results as $result) {
 			array_push($output, $result['productName']);
+		}
+		return $output;
+	}
+
+	public function getCustomers(){
+		$sql = "SELECT customerName from Customers";
+		$results = $this->executeQuery($sql);
+		$output = [];
+		foreach ($results as $result) {
+			array_push($output, $result['customerName']);
 		}
 		return $output;
 	}
