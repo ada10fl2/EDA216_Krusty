@@ -1,15 +1,17 @@
 <?php
+require_once('./database/database.inc.php');
 $host = "127.0.0.1";
 $username = "eda216";
 $password = "eda216";
 $database = "eda216";
-
+$db = new Database($host, $username, $password, $database);
 $conn = new PDO("mysql:host=$host;dbname=$database", $username, $password);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $stmt = $conn->prepare("select now()");
 $stmt->execute();
 $result = $stmt->fetchAll();
+
 ?>
 
 <html>

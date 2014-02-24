@@ -1,3 +1,15 @@
+<?php
+	require_once('./database/database.inc.php');
+	require_once("./database/mysql_connect_data.inc.php");
+	
+	$db = new Database($host, $userName, $password, $database);
+	$db->openConnection();
+	if (!$db->isConnected()) {
+		//header("Location: errors/cannotConnect.html");
+		exit();
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

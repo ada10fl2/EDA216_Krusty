@@ -3,3 +3,5 @@ fuel/app/cache/*/*
 
 *.tmp
 /nbproject/private/
+
+.DS_Store
