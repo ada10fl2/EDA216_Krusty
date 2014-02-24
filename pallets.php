@@ -24,29 +24,29 @@
 		    	<div class='col-sm-1'>    
 		            <div class='form-group'>
 		            	<label for="user_title">&nbsp</label>
-		    			<button type="reset" onclick="document.location='pallets.php'" class="btn btn-warning form-control">Reset</button>
+		    			<button type="reset" class="btn btn-warning form-control">Reset</button>
 		    		</div>
 		    	</div>
 		        <div class='col-sm-2'>    
 		            <div class='form-group'>
 		                <label for="user_title">Start date</label>
-		                <input type="date" class="form-control" name="startdate" value="<?php echo $startDate ?>"/>
+		                <input type="date" class="form-control" name="startdate" value="<?= $startDate ?>"/>
 		            </div>
 		        </div>
 		        <div class='col-sm-2'>
 		            <div class='form-group'>
 		                <label for="user_firstname">End date</label>
-		                <input type="date" class="form-control" name="enddate" value="<?php echo $endDate ?>"/>
+		                <input type="date" class="form-control" name="enddate" value="<?= $endDate ?>"/>
 		            </div>
 		        </div>
 		        <div class='col-sm-2'>
 		            <div class='form-group'>
 		                <label for="user_lastname">Product name</label>
 		                <select class="form-control" name="productname">
-						<option value="">All products</option>
-						<?php foreach ($products as $product) { ?>
-						<option value="<?php echo $product; ?>" <?php echo $product == $productName ? "selected=\"yes\"" : ""; ?>><?php echo $product; ?></option>
-						<?php } ?>
+							<option value="">All products</option>
+							<?php foreach ($products as $product) { ?>
+							<option value="<?= $product; ?>" <?= ($product == $productName ? "selected=\"yes\"" : "") ?>><?= $product; ?></option>
+							<?php } ?>
 						</select>
 		        	</div>
 		        </div>
@@ -54,17 +54,17 @@
 		            <div class='form-group'>
 		                <label for="user_lastname">Customers</label>
 		                <select class="form-control" name="customer">
-					<option value="">All customers</option>
-					<?php foreach ($customers as $customer) { ?>
-					<option value="<?php echo $customer; ?>" <?php echo $customer == $customerName ? "selected=\"yes\"" : ""; ?>><?php echo $customer; ?></option>
-					<?php } ?>
-					</select>
+							<option value="">All customers</option>
+							<?php foreach ($customers as $customer) { ?>
+							<option value="<?= $customer ?>" <?= $customer == $customerName ? "selected=\"yes\"" : ""; ?>><?= $customer; ?></option>
+							<?php } ?>
+						</select>
 		            </div>
 		        </div>
 		        <div class='col-sm-1'>
 		            <div class='form-group'>
 		                <label for="user_lastname">Blocked</label>
-		                <input type="checkbox" class="form-control" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
+		                <input type="checkbox" class="form-control" name="blocked" value="true" <?= $blocked ? "checked" : ""; ?> />
 		            </div>
 		        </div>
 		        <div class='col-sm-1'>
