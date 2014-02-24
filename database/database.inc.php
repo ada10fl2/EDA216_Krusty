@@ -107,16 +107,17 @@ class Database {
 		$output = [];
 		foreach ($pallets as $result) {
 			$pallet = new Pallet();
-			$pallet->palletId = $result['palletId'];
+			$pallet->palletId = $result['palletID'];
 			$pallet->creationDate = $result['creationDate'];
 			$pallet->state = $result['currentState'];
+			$pallet->productName = $result['productName'];
 			array_push($output, $pallet);
 		}
 		return $output;
 	}
 
 	public function getPallets($startDate, $endDate){
-		$sql = "SELECT palletId, creationDate FROM Pallets WHERE creationDate >= ? AND creationDate <= ?";
+		$sql = "SELECT * FROM pallets INNER JOIN products ON Products.productid = Pallets.productid WHERE creationDate >= ? AND creationDate <= ?";
 		$results = $this->executeQuery($sql, array($startDate, $endDate));
 		return $this->createPallets($results);
 	}

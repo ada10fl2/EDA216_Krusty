@@ -20,7 +20,9 @@
 			<tr>
 				<th>#</th>
 				<th>Name</th>
-				<th>Kakor</th>
+				<th>Creation date</th>
+				<th>Recipient</th>
+				<th>Status</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,7 +31,9 @@
 			 	foreach ($pallets as $pallet) { ?>
 			<tr>
 				<td><?= $pallet->palletId ?></td>
+				<td><?= $pallet->productName ?></td>
 				<td><?= $pallet->creationDate ?></td>
+				<td>Nope.avi</td>
 				<td><?= $pallet->state ?></td>
 			</tr>
 			<?php }
