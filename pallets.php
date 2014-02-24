@@ -70,7 +70,7 @@
 		        <div class='col-sm-1'>
 		            <div class='form-group'>
 		                <label for="user_lastname">&nbsp</label>
-		                <button type="submit" class="btn btn-success">Submit</button>
+		                <button type="submit" class="btn btn-primary">Submit</button>
 		            </div>
 		        </div>
 		    </div>
