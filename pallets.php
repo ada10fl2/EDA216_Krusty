@@ -1,4 +1,4 @@
-<?php $page = "pallets"; $title = "Pallets In Storage"; include "includes/header.php"; ?>
+<?php $page = "pallets"; $title = "Pallets in storage"; include "includes/header.php"; ?>
 	<h1><?= $title ?></h1>
 	<?php 
 	$startDate = getSafeParam('startdate', '2014-01-01');
@@ -76,7 +76,7 @@
 		    </div>
 	    </form>
 	</fieldset>
-	<legend>Result</legend>
+	<legend>Results</legend>
 	<a role="button" class="btn btn-danger pull-right" 
 		href="block.php?id=all&filter=<?= urlencode(base64_encode(serialize($filter))) ?>&action=block&relocation=<?= urlencode(url()) ?>">
 		Block Visible Pallets
@@ -111,6 +111,9 @@
 						href="showpallet.php?palletid=<?= $pallet->palletId ?>">
 							View
 					</a>
+					<?php if (!$pallet->deliveryDate){ ?>
+						<a 	role="button" class="btn btn-success" href="javascript:alert('Not implemented, you fool!');">Deliver</a>
+					<?php } ?>
 					<a 	role="button" 
 						class="btn <?= isBlocked($pallet) ? "btn-warning" : "btn-danger" ?> pull-right" 
 						href="block.php?id=<?= $pallet->palletId ?>&action=<?= isBlocked($pallet) ? "unblock" : "block" ?>&relocation=<?= url() ?>">
