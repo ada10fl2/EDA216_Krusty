@@ -8,6 +8,8 @@
 		//header("Location: errors/cannotConnect.html");
 		exit();
 	}
+
+	$projectname = "Krusty Cookies AB";
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +20,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
 		<meta name="author" content="">
-
+		<title><?=  $projectname." - ".(isset($title) ? $title : "Mangagment Console") ?></title>
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
@@ -29,6 +31,9 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="static/global.style.css">
+		<script src="static/global.script.js"></script>
 	</head>
 	<body>
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -40,13 +45,13 @@
 	    <span class="icon-bar"></span>
 	    <span class="icon-bar"></span>
 	  </button>
-	  <a class="navbar-brand" href="#">Krusty Cookies AB - Mangagment Console</a>
+	  <a class="navbar-brand" href="#"><?= $projectname ?></a>
 	</div>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="#">Home</a></li>
-			<li><a href="#about">About</a></li>
-			<li><a href="#contact">Contact</a></li>
+			<li <?= (!isset($page) || $page === "home") ? "class='active'" : "" ?> ><a href="index.php">Home</a></li>
+			<li <?= ( isset($page) && $page === "pallets") ? "class='active'" : "" ?> ><a href="pallets.php">Pallets</a></li>
+			<li <?= ( isset($page) && $page === "about") ? "class='active'" : "" ?> ><a href="about.php">About</a></li>
 		</ul>
 	</div><!--/.nav-collapse -->
 	</div>
