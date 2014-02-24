@@ -1,16 +1,19 @@
 <?php $page = "pallets"; $title = "Pallets In Storage"; include "includes/header.php"; ?>
 	<h1><?= $title ?></h1>
 	<?php 
-		$items= array( 
-			array("name" => "pallet1", "id" => 1, "product" => "Nut Rings"),
-			array("name" => "pallet2", "id" => 2, "product" => "Nut Rings"),
-			array("name" => "pallet3", "id" => 3, "product" => "Nut Rings"),
-			array("name" => "pallet4", "id" => 4, "product" => "Nut Rings"),
-			array("name" => "pallet5", "id" => 5, "product" => "Nut Rings"),
-			array("name" => "pallet6", "id" => 6, "product" => "Nut Rings"),
-			array("name" => "pallet7", "id" => 7, "product" => "Nut Rings") 
-		); 
+	$startDate = $_GET['startDate'];
+	$endDate = $_GET['endDate'];
+		if ($startDate && $endDate) {
+		$pallets = $db->getPallets($startDate, $endDate);
+		}
 	?>
+	<form>
+			<p>
+			Start date: <input type="date" name="startDate" value="<?php echo ($startDate ? $startDate : '2014-01-01') ?>"/>
+			End date: <input type="date" name="endDate" value="<?php echo ($endDate ? $endDate : '2015-01-01')  ?>"/>
+			</p>
+			<input type="submit" title="Submit">
+		</form>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -20,13 +23,16 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($items as $i){ ?>
+
+			<?php if(is_array($pallets)){
+			 	foreach ($pallets as $pallet) { ?>
 			<tr>
-				<td><?= $i['id'] ?></td>
-				<td><?= $i['name'] ?></td>
-				<td><?= $i['product'] ?></td>
+				<td><?= $pallet->palletId ?></td>
+				<td><?= $pallet->creationDate ?></td>
+				<td><?= $pallet->state ?></td>
 			</tr>
-			<?php } ?>
+			<?php }
+		} ?>
 		</tbody>
 	</table>
 <?php include "includes/footer.php"; ?>
