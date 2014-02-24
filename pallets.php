@@ -32,6 +32,7 @@
 				<th>#</th>
 				<th>Name</th>
 				<th>Creation date</th>
+				<th>Delivery date</th>
 				<th>Recipient</th>
 				<th>State</th>
 			</tr>
@@ -43,6 +44,7 @@
 				<td><?= $pallet->palletId ?></td>
 				<td><?= $pallet->productName ?></td>
 				<td><?= $pallet->creationDate ?></td>
+				<td><?= ($pallet ? $pallet->deliveryDate : "Not delivered") ?></td>
 				<td><?= $pallet->customerName ?></td>
 				<td class='state'><?= $pallet->state ?></td>
 				<td class='viewbutton'>

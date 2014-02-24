@@ -132,4 +132,8 @@ insert into ingredientTransactions (ingredientID,transactionAmount,transactionDa
 
 insert into pallets (productID,orderID,currentState,creationDate) values(1,2,'BLOCKED', '2014-02-20');
 insert into pallets (productID,orderID,currentState,creationDate) values(2,2,'', '2014-02-21');
-	insert into pallets (productID,orderID,currentState,creationDate) values(3,2,'', '2014-02-22');
+insert into pallets (productID,orderID,currentState,creationDate) values(3,1,'', '2014-02-22');
+
+INSERT INTO loadingOrders(orderID, loadingDate) values(1, '2014-02-20');
+
+insert into loadingOrderContents(loadingOrderlD, palletID) values(1, 3);
