@@ -66,7 +66,7 @@
 		        <div class='col-sm-1'>
 		            <div class='form-group'>
 		                <label for="user_lastname">Blocked</label>
-		                <input type="checkbox" class="form-control" name="blocked" value="true" <?= $blocked ? "checked" : ""; ?> />
+		                <input type="checkbox" class="form-control checkboxfix" name="blocked" value="true" <?= $blocked ? "checked" : ""; ?> />
 		            </div>
 		        </div>
 		        <div class='col-sm-1'>
