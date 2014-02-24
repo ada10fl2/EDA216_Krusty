@@ -162,5 +162,34 @@ class Database {
 		}
 		return $output;
 	}
+	public function getTime(){
+		$sql = "SELECT now() as d";
+		$results = $this->executeQuery($sql);
+		foreach ($results as $result) {
+			return $result['d'];
+		}
+	}
+	public function getCustomerOrders(){
+		$sql = "SELECT customers.customerName as cn, orders.orderID as oi from customers RIGHT JOIN orders ON customers.customerID = orders.customerID";
+		$results = $this->executeQuery($sql);
+		$output = [];
+		foreach ($results as $result) {
+			array_push($output, $result['cn'] . '-' . $result['oi']);
+		}
+		return $output;
+	}
+	public function getProductIDFromProductName($productName){
+		$sql = "Select productID from products where productName=?";
+		$results = $this->executeQuery($sql,array($productName));
+		foreach ($results as $result) {
+			return $result['productID'];
+		}
+	}
+	public function createPallet($prodID, $orderID, $currstate, $creationDate){
+		if($prodID  && $orderID && $currstate && $creationDate){
+			$sql = "INSERT INTO pallets (productID, orderID, currentState, creationDate) values(?,?,?,?)";
+			$this->executeUpdate($sql, array($prodID, $orderID, $currstate, $creationDate));
+		}
+	}
 }
 ?>

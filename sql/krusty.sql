@@ -77,7 +77,7 @@ create table pallets (
 	productID INT NOT NULL,
 	orderID INT NOT NULL,
 	currentState VARCHAR(255),
-	creationDate Date,
+	creationDate DateTime,
 	FOREIGN KEY(productID) REFERENCES products(productID),
 	FOREIGN KEY(orderID) REFERENCES orders(orderID),
 	PRIMARY KEY(palletID)
