@@ -12,7 +12,7 @@
 		"startdate" => $startDate,
 		"enddate" => $endDate,
 		"customer" => $customerName,
-		"productname" => $productName,
+		"product" => $productName,
 		"blocked" => $blocked
 	);
 	$customers = $db->getCustomers();
