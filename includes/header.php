@@ -32,7 +32,7 @@
 	</head>
 	<body>
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	<div class="container" style="margin-top: 60px;">
+	<div class="container">
 	<div class="navbar-header">
 	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 	    <span class="sr-only">Toggle navigation</span>
@@ -52,6 +52,6 @@
 	</div>
 	</div>
 
-    <div class="container">
+    <div class="container" style="margin-top: 60px;">
       <div class="starter-template">
       <!-- content goes here -->
