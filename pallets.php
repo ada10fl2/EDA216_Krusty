@@ -1,8 +1,8 @@
 <?php $page = "pallets"; $title = "Pallets in storage"; include "includes/header.php"; ?>
 	<h1><?= $title ?></h1>
 	<?php 
-	$startDate = getSafeParam('startdate', '2014-01-01');
-	$endDate = getSafeParam('enddate', '2015-01-01');
+	$startDate = getSafeParam('startdate', '2000-01-01');
+	$endDate = getSafeParam('enddate', '2016-01-01');
 	$productName = getSafeParam('productname', null);
 	$customerName = getSafeParam('customer', null);
 	$blocked = getSafeParam('blocked', null);

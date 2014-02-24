@@ -17,7 +17,6 @@
 	$orders = $db->getCustomerOrders();
 	?>
 		<fieldset>
-	    <legend>Filter</legend>
 	    <form>
 		    <div class='row'>
 		    	<div class='col-sm-2'>   
