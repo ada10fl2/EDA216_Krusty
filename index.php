@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Krusty</title>
-    </head>
-    <body>
-        <pre>
-            Date: 
-            <?php
-                echo date("Y-M-d h:m:s");
-            ?>
-        </pre>
-    </body>
-</html>
+<?php include "includes/header.php" ?>
+	<pre>
+	Date: 
+	<?php
+	    echo date("Y-M-d h:m:s");
+	?>
+	</pre>
+<?php include "includes/footer.php" ?>
