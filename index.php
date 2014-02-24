@@ -1,4 +1,5 @@
 <?php include "includes/header.php"; ?>
+	<h1>Home</h1>
 	<pre>
 	Date: 
 	<?php
