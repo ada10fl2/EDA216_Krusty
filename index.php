@@ -1,7 +1,4 @@
 <?php include "includes/header.php"; ?>
 	<h1>Home</h1>
-	<pre>
-	<?php
-	?>
-	</pre>
+	<p>Go to pallet to manage pallets</p>
 <?php include "includes/footer.php"; ?>
