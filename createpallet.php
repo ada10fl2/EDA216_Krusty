@@ -55,9 +55,12 @@
 				<div class="col-sm-6"></div>
 			</div>
 			<div class='form-group'>
-				<label class="col-sm-3 control-label"></label>
-				<div class="col-sm-9">
-					<input type="submit" class="btn btn-primary btn-lg pull-right" title="Submit">
+				<div class="col-sm-12">
+					<a role="button" class="btn btn-link btn-lg pull-left" href="/">
+					<span class="glyphicon glyphicon-ban-circle"></span>
+					Cancel
+					</a>
+					<input type="submit" class="btn btn-success btn-lg pull-right" title="Submit">
 				</div>
 			</div>
 		</div>
