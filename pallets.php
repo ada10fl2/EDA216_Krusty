@@ -4,25 +4,32 @@
 		$items= array( 
 			array("name" => "pallet1", "id" => 1, "product" => "Nut Rings"),
 			array("name" => "pallet2", "id" => 2, "product" => "Nut Rings"),
-			array("name" => "pallet3", "id" => 3, "product" => "Nut Rings"),
+			array("name" => "pallet3", "id" => 3, "product" => "Nut Rings", "state" => "blocked"),
 			array("name" => "pallet4", "id" => 4, "product" => "Nut Rings"),
 			array("name" => "pallet5", "id" => 5, "product" => "Nut Rings"),
 			array("name" => "pallet6", "id" => 6, "product" => "Nut Rings"),
-			array("name" => "pallet7", "id" => 7, "product" => "Nut Rings") 
+			array("name" => "pallet7", "id" => 7, "product" => "Nut Rings", "state" => "blocked") 
 		); 
+		function ifset(&$var){
+			if(isset($var)) return $var;
+			return "";
+		}
+
 	?>
-	<table class="table table-striped">
+	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th>#</th>
+				<th>Status</th>
 				<th>Name</th>
-				<th>Kakor</th>
+				<th>Product</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach($items as $i){ ?>
-			<tr>
+			<tr class='<?= isset($i['state']) && $i['state'] === "blocked" ? "danger" : "" ?>'>
 				<td><?= $i['id'] ?></td>
+				<td><?= ifset($i['state']) ?></td>
 				<td><?= $i['name'] ?></td>
 				<td><?= $i['product'] ?></td>
 			</tr>
