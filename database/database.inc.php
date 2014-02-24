@@ -143,7 +143,6 @@ class Database {
 		$results = $this->executeQuery($sql);
 		$output = [];
 		foreach ($results as $result) {
-			// print_r($result);
 			array_push($output, $result['productName']);
 		}
 		return $output;
