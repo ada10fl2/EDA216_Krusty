@@ -31,7 +31,7 @@
 		<tbody>
 		<?php if(is_array($pallets)){
 		 	foreach ($pallets as $pallet) { ?>
-			<tr class='<?= isset($pallet->state) && $pallet->state === "blocked" ? "danger" : "" ?>'>
+			<tr class='<?= (isset($pallet->state) && $pallet->state === "BLOCKED") ? "danger" : "" ?>'>
 				<td><?= $pallet->palletId ?></td>
 				<td><?= $pallet->productName ?></td>
 				<td><?= $pallet->creationDate ?></td>
