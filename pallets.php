@@ -13,11 +13,12 @@
 		<p>
 			Start date: <input type="date" name="startdate" value="<?php echo $startDate ?>"/>
 			End date: <input type="date" name="enddate" value="<?php echo $endDate ?>"/>
-			Product name: <select>
+			Product name: <select name="productname">
+			<option value="">All products</option>
 			<?php foreach ($products as $product) { ?>
-			<option value="<?php echo $product; ?>"><?php echo $product; ?></option>
+			<option value="<?php echo $product; ?>" <?php echo $product == $productName ? "selected=\"yes\"" : ""; ?>><?php echo $product; ?></option>
 			<?php } ?>
-			</select><input type="text" name="productname" value="<?php echo $productName ?>"/>
+			</select>
 			Blocked: <input type="checkbox" name="blocked" value="true" <?php echo $blocked ? "checked" : ""; ?> />
 		</p>
 		<p>
