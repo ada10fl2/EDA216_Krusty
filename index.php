@@ -69,10 +69,10 @@
 		                <input type="checkbox" class="form-control" name="blocked" value="true" <?= $blocked ? "checked" : ""; ?> />
 		            </div>
 		        </div>
-		        <div class='col-sm-1'>
+		        <div class='col-sm-2'>
 		            <div class='form-group'>
 		                <label for="user_lastname">&nbsp</label>
-		                <button type="submit" class="btn btn-primary">
+		                <button type="submit" class="btn btn-primary expand">
 		                	<span class="glyphicon glyphicon-search"></span> Search
 	                	</button>
 		            </div>
