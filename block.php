@@ -22,6 +22,6 @@
 		?>
 	</p>
 	<script>
-		document.location = '<?= getSafeParam('relocation','None'); ?>';
+		document.location = '<?= $url ?>';
 	</script>
 <?php include "includes/footer.php"; ?>
