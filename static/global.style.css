@@ -3,14 +3,12 @@
 	color: red; 
 }
 
-<<<<<<< HEAD
 .expand {
 	width: 100%;
-=======
+}
 .checkboxfix{
 	margin: 0px 0px 0px 0px !important;
 }
 .actionbuttons label {
 	visibility:hidden;
->>>>>>> e7a0dd3a2f2d95b18ff1768691d09f8c7cbe8a4b
 }
