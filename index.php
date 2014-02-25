@@ -60,6 +60,14 @@
 		                <input type="checkbox" class="form-control checkboxfix" name="blocked" value="true" <?= $blocked ? "checked" : ""; ?> />
 		            </div>
 		        </div>
+		         <div class='col-sm-2'>
+		            <div class='form-group actionbuttons'>
+		            	<label>Submit</label>
+		                <button id="_search_btn" type="submit" class="btn btn-primary expand">
+		                	<span class="glyphicon glyphicon-search"></span> Search
+	                	</button>
+		    		</div>
+		    	</div>
 				<div class='col-sm-1'>
 		            <div class='form-group actionbuttons'>
 		            	<label>Reset</label>
@@ -68,16 +76,6 @@
 						</button>
 		    		</div>
 		    	</div>
-		        <div class='col-sm-2 pull-right'>
-		            <div class='form-group actionbuttons'>
-		            	<label>Submit</label>
-		                <button id="_search_btn" type="submit" class="btn btn-primary">
-		                	<span class="glyphicon glyphicon-search"></span> Search
-	                	</button>
-		    		</div>
-		    	</div>
-
-		    	
 		    </div>
 	    </form>
 	</fieldset>
