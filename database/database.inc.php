@@ -8,7 +8,7 @@
  * 2) Write more functions.
  *
  */
-require_once('./database/pallet.php');
+require_once('./database/classes.php');
 
 class Database {
 	private $host;
@@ -40,6 +40,7 @@ class Database {
 			$this->conn = new PDO("mysql:host=$this->host;dbname=$this->database;charset=utf8", 
 				$this->userName,  $this->password);
 			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); //Fetch only named tuples
 		} catch (PDOException $e) {
 			$error = "Connection error: " . $e->getMessage();
 			print $error . "<p>";
@@ -104,18 +105,9 @@ class Database {
 	}
 
 	private function createPallets($pallets){
-		function ifvarset(&$var, $default){
-			return isset($var) ? $var : $default;
-		}
 		$output = [];
 		foreach ($pallets as $result) {
-			$pallet = new Pallet();
-			$pallet->palletId = ifvarset($result['palletID'], -1);
-			$pallet->creationDate = ifvarset($result['creationDate'], "2000-01-01");
-			$pallet->state = ifvarset($result['currentState'], "unknown");
-			$pallet->productName = ifvarset($result['productName'], "NULL");
-			$pallet->customerName = ifvarset($result['customerName'], "NULL");
-			$pallet->deliveryDate = ifvarset($result['loadingDate'], "");
+			$pallet = new Pallet($result);
 			array_push($output, $pallet);
 		}
 		return $output;
@@ -147,6 +139,17 @@ class Database {
 		}
 		$sql = $sql." ORDER BY Pallets.palletID";
 		return $this->createPallets($this->executeQuery($sql,$parameters));
+	}
+
+	public function getIngredients() {
+		$output = [];
+		$sql = "SELECT * FROM ingredients ORDER BY name";
+		$result = $this->executeQuery($sql);
+		foreach ($result as $tuple) {
+			$i = new Ingredient($tuple);
+			array_push($output, $i);
+		}
+		return $output;
 	}
 
 	public function getPallet($palletId){
@@ -227,7 +230,8 @@ class Database {
 	}
 
 	public function getCustomerOrders(){
-		$sql = "SELECT customers.customerName as cn, orders.orderID as oi from customers RIGHT JOIN orders ON customers.customerID = orders.customerID";
+		$sql = "SELECT customers.customerName as cn, orders.orderID as oi from customers "
+			 . "RIGHT JOIN orders ON customers.customerID = orders.customerID";
 		$results = $this->executeQuery($sql);
 		$output = [];
 		foreach ($results as $result) {
@@ -247,8 +251,22 @@ class Database {
 	public function createPallet($prodID, $orderID, $currstate, $creationDate){
 		if($prodID  && $orderID && $currstate && $creationDate){
 			$sql = "INSERT INTO pallets (productID, orderID, currentState, creationDate) values(?,?,?,?)";
-			$this->executeUpdate($sql, array($prodID, $orderID, $currstate, $creationDate));
+			$r = $this->executeUpdate($sql, array($prodID, $orderID, $currstate, $creationDate));
+			return $this->conn->lastInsertId();
 		}
+		return -1;
+	}
+
+	public function getSubtractedIngredients($productID) {
+		$sql = "SELECT ingredients.ingredientID, name, (amountInStorage - ingredientAmount) as amountInStorage FROM productingredients "
+			 . "LEFT OUTER JOIN ingredients ON productingredients.ingredientID = ingredients.ingredientID "
+			 . "WHERE productID = ?";
+		$result = $this->executeQuery($sql, array($productID));
+		$output = [];
+		foreach ($result as $tuple) {
+			array_push($output, new Ingredient($tuple));
+		}
+		return $output;
 	}
 }
 ?>

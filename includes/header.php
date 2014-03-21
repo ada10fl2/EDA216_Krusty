@@ -69,6 +69,7 @@
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
 			<li <?= (!isset($page) || $page === "home") ? "class='active'" : "" ?> ><a href="index.php">Home</a></li>
+			<li <?= ( isset($page) && $page === "ingredients") ? "class='active'" : "" ?> ><a href="ingredients.php">Ingredients</a></li>
 			<li <?= ( isset($page) && $page === "about") ? "class='active'" : "" ?> ><a href="about.php">About</a></li>
 		</ul>
 	</div><!--/.nav-collapse -->
