@@ -60,7 +60,8 @@ create table productIngredients (
 	ingredientID INT NOT NULL,
 	ingredientAmount INT,
 	FOREIGN KEY(productID) REFERENCES products(productID),
-	FOREIGN KEY(ingredientID) REFERENCES ingredients(ingredientID)
+	FOREIGN KEY(ingredientID) REFERENCES ingredients(ingredientID),
+	PRIMARY KEY(productID, ingredientID)
 );
 
 create table ingredientTransactions (
@@ -114,16 +115,17 @@ insert into orderContents (orderID,orderAmount,productID) values(1,20,1);
 insert into orderContents (orderID,orderAmount,productID) values(1,10,2);
 insert into orderContents (orderID,orderAmount,productID) values(2,30,3);
 
-insert into ingredients (amountInStorage,name) values(10000,'Butter');
-insert into ingredients (amountInStorage,name) values(10000,'Flour');
-insert into ingredients (amountInStorage,name) values(20000,'Sugar');
-insert into ingredients (amountInStorage,name) values(15000,'Eggs');
+insert into ingredients (amountInStorage,name) values(100,'Butter');
+insert into ingredients (amountInStorage,name) values(100,'Flour');
+insert into ingredients (amountInStorage,name) values(100,'Sugar');
+insert into ingredients (amountInStorage,name) values(100,'Eggs');
 
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(1,1,450);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(1,2,450);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(2,1,400);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(2,2,400);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(2,3,270);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(1,1,50);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(1,2,50);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(2,1,40);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(2,2,40);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(2,4,20);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(3,1,50);
 
 insert into ingredientTransactions (ingredientID,transactionAmount,transactionDate) values(1,10000,'2014-01-01');
 insert into ingredientTransactions (ingredientID,transactionAmount,transactionDate) values(2,10000,'2014-01-01');
