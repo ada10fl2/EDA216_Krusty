@@ -172,24 +172,24 @@ insert into productIngredients (productID,ingredientID,ingredientAmount) values(
 # Tango
 insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,2,200);
 insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,8,250);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,300);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,1,300);
 insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,16,4);
 insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,17,2);
 
 # Almond
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,2,400);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,8,270);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,18,279);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,1,400);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,19,10);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(5,2,400);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(5,8,270);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(5,18,279);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(5,1,400);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(5,19,10);
 
 # Berliner
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,1,350);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,2,250);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,3,100);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,13,50);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,20,5);
-insert into productIngredients (productID,ingredientID,ingredientAmount) values(4,10,50);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(6,1,350);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(6,2,250);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(6,3,100);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(6,13,50);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(6,20,5);
+insert into productIngredients (productID,ingredientID,ingredientAmount) values(6,10,50);
 
 insert into ingredientTransactions (ingredientID,transactionAmount,transactionDate) values(1,10000,'2014-01-01');
 insert into ingredientTransactions (ingredientID,transactionAmount,transactionDate) values(2,10000,'2014-01-01');
