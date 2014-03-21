@@ -10,11 +10,9 @@
 	$was_submit = ($productName !== false);
 	$success = false;
 	if($was_submit){
-		function is_negative($ing){ return $ing->amountInStorage < 0; }
-		
 		$prodid= $db->getProductIDFromProductName($productName);
 		$subtractedIngredients = $db->getSubtractedIngredients($prodid);
-		$remains = array_filter($subtractedIngredients, "is_negative");
+		$remains = array_filter($subtractedIngredients, create_function('$i','return $i->amountInStorage < 0;'));
 		$success = (count($remains) === 0);
 		if($success) {
 			$splitorder = explode('-', $order);
@@ -33,7 +31,7 @@
 			?>
 			<div class="alert alert-danger">
 				<strong>Oh Snap!</strong>
-				Missing ingredients!
+				Missing ingredients in storage
 			</div>
 			<?php 
 		}
@@ -43,7 +41,6 @@
 	$orders = $db->getCustomerOrders();
 
 	$hasError = ($was_submit && !$success) ? "has-error" : "";
-
 	?>
 		<fieldset>
 	    <form class="form-horizontal col-xs-6 well well-lg" role="form">
@@ -54,7 +51,7 @@
 					onchange="$('.form-group').removeClass('has-error'); $('#remains').fadeOut(); $('.alert').fadeOut()">
 					<?php
 						foreach ($products as $prod) { ?>
-							<option><?= $prod ?></option>
+							<option <?php if($prod === $productName) echo "selected";?> ><?= $prod ?></option>
 					<?php } ?>
 					</select>
 				</div>
@@ -71,7 +68,7 @@
 					<select type="select" class="form-control" name="order">
 						<?php
 							foreach ($orders as $ord) { ?>
-								<option><?= $ord ?></option>
+								<option <?php if($ord === $order) echo "selected";?> ><?= $ord ?></option>
 						<?php } ?>
 					</select>
 				</div>

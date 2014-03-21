@@ -248,11 +248,35 @@ class Database {
 		}
 	}
 
-	public function createPallet($prodID, $orderID, $currstate, $creationDate){
-		if($prodID  && $orderID && $currstate && $creationDate){
-			$sql = "INSERT INTO pallets (productID, orderID, currentState, creationDate) values(?,?,?,?)";
-			$r = $this->executeUpdate($sql, array($prodID, $orderID, $currstate, $creationDate));
-			return $this->conn->lastInsertId();
+	public function createPallet($productID, $orderID, $currstate, $creationDate){
+		if($productID  && $orderID && $currstate && $creationDate){
+			
+			$subtracted = $this->getSubtractedIngredients($productID);
+			$remain = array_filter($subtracted, create_function('$i','return $i->amountInStorage < 0;'));
+			if( count($remain) > 0){
+				return -1;
+			}
+
+			$this->conn->beginTransaction();
+			$sql1 = "UPDATE ingredients SET amountInStorage = amountInStorage - " .
+					"(select ingredientAmount from productingredients " . 
+						"where productingredients.ingredientID = ingredients.ingredientID AND productingredients.productID = ?)" . 
+					" WHERE ingredientID in (select ingredientID from productingredients WHERE productID = ?)";
+			$this->executeUpdate($sql1, array($productID,$productID));
+			
+			$sql2 = "SELECT count(*) as count FROM ingredients WHERE amountInStorage < 0 AND " . 
+			 		"ingredientID in (select ingredientID from productingredients WHERE productID = ?)";
+			$negative = $this->executeQuery($sql2, array($productID));
+			
+			if($negative[0]["count"] > 0) { //Negative values => Integrity not intact
+				$this->conn->rollback();
+			} else { // Looks fine, do commit
+				$this->conn->commit();
+				
+				$sql3 = "INSERT INTO pallets (productID, orderID, currentState, creationDate) values (?,?,?,?)";
+				$this->executeUpdate($sql3, array($productID, $orderID, $currstate, $creationDate));
+				return $this->conn->lastInsertId();
+			}
 		}
 		return -1;
 	}
