@@ -40,3 +40,7 @@ CREATE USER 'eda216'@'localhost' IDENTIFIED BY 'eda216';
 GRANT ALL PRIVILEGES ON *.* TO 'eda216'@'localhost' IDENTIFIED BY 'eda216';
 FLUSH PRIVILEGES;
 ```
+Deploy
+```
+rsync -r /vagrant /var/www/html
+```
