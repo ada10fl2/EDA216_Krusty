@@ -10,3 +10,4 @@ fuel/app/cache/*/*
 
 # Thumbnails
 ._*
+.vagrant/
