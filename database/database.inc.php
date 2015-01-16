@@ -104,9 +104,9 @@ class Database {
 			// die($error);
 	}
 
-	private function createPallets($pallets){
-		$output = [];
-		foreach ($pallets as $result) {
+	private function createPallets($Pallets) {
+		$output = array();
+		foreach ($Pallets as $result) {
 			$pallet = new Pallet($result);
 			array_push($output, $pallet);
 		}
@@ -118,14 +118,14 @@ class Database {
 		$sql = "SELECT Pallets.palletID, Pallets.creationDate, "
 				."Pallets.currentState, Products.productName, "
 				."Customers.customerName, LoadingOrders.loadingDate "
-				."FROM pallets LEFT OUTER JOIN loadingOrderContents "
-				."ON Pallets.palletId = loadingOrderContents.palletId "
-				."LEFT OUTER JOIN LoadingOrders ON loadingOrderContents.loadingOrderlD = LoadingOrders.loadingOrderlD "
-				."INNER JOIN products ON Products.productid = Pallets.productid "
+				."FROM Pallets LEFT OUTER JOIN LoadingOrderContents "
+				."ON Pallets.palletId = LoadingOrderContents.palletId "
+				."LEFT OUTER JOIN LoadingOrders ON LoadingOrderContents.loadingOrderlD = LoadingOrders.loadingOrderlD "
+				."INNER JOIN Products ON Products.productid = Pallets.productid "
 				."INNER JOIN Orders ON Orders.orderID = Pallets.orderID "
 				."INNER JOIN Customers ON Orders.customerID = Customers.customerID "
 				."WHERE creationDate >= ? AND creationDate <= ?";
-		$parameters = [$startDate, $endDate];
+		$parameters = array($startDate, $endDate);
 		if ($blocked) {
 			$sql = $sql." AND Pallets.currentState = 'BLOCKED'";
 		}
@@ -142,8 +142,8 @@ class Database {
 	}
 
 	public function getIngredients() {
-		$output = [];
-		$sql = "SELECT * FROM ingredients ORDER BY name";
+		$output = array();
+		$sql = "SELECT * FROM Ingredients ORDER BY name";
 		$result = $this->executeQuery($sql);
 		foreach ($result as $tuple) {
 			$i = new Ingredient($tuple);
@@ -184,10 +184,10 @@ class Database {
 		$blocked =   $filter['blocked'];
 		$product =   $filter['product'];
 		$customer =  $filter['customer'];
-		$sql = "SELECT Pallets.palletID as id FROM pallets LEFT OUTER JOIN loadingOrderContents "
-				."ON Pallets.palletId = loadingOrderContents.palletId "
-				."LEFT OUTER JOIN LoadingOrders ON loadingOrderContents.loadingOrderlD = LoadingOrders.loadingOrderlD "
-				."INNER JOIN products ON Products.productid = Pallets.productid "
+		$sql = "SELECT Pallets.palletID as id FROM Pallets LEFT OUTER JOIN LoadingOrderContents "
+				."ON Pallets.palletId = LoadingOrderContents.palletId "
+				."LEFT OUTER JOIN LoadingOrders ON LoadingOrderContents.loadingOrderlD = LoadingOrders.loadingOrderlD "
+				."INNER JOIN Products ON Products.productid = Pallets.productid "
 				."INNER JOIN Orders ON Orders.orderID = Pallets.orderID "
 				."INNER JOIN Customers ON Orders.customerID = Customers.customerID "
 				."WHERE creationDate >= ? AND creationDate <= ?";
@@ -208,17 +208,17 @@ class Database {
 		foreach($results as $row) {
 			if(isset($row['id'])) {
 				$id = $row['id'];
-				$this->executeUpdate("UPDATE pallets SET Pallets.currentState = 'BLOCKED' WHERE Pallets.palletId = ?", array($id));
+				$this->executeUpdate("UPDATE Pallets SET Pallets.currentState = 'BLOCKED' WHERE Pallets.palletId = ?", array($id));
 			}
 		}
 	}
 	
 	public function unblockSinglePallet($id){
-		$this->executeUpdate("UPDATE pallets SET Pallets.currentState = 'STORED' WHERE Pallets.palletId = ?", array($id));
+		$this->executeUpdate("UPDATE Pallets SET Pallets.currentState = 'STORED' WHERE Pallets.palletId = ?", array($id));
 	}
 
 	public function blockSinglePallet($id){
-		$this->executeUpdate("UPDATE pallets SET Pallets.currentState = 'BLOCKED' WHERE Pallets.palletId = ?", array($id));
+		$this->executeUpdate("UPDATE Pallets SET Pallets.currentState = 'BLOCKED' WHERE Pallets.palletId = ?", array($id));
 	}
 
 	public function getTime(){
@@ -230,8 +230,8 @@ class Database {
 	}
 
 	public function getCustomerOrders(){
-		$sql = "SELECT customers.customerName as cn, orders.orderID as oi from customers "
-			 . "RIGHT JOIN orders ON customers.customerID = orders.customerID";
+		$sql = "SELECT customers.customerName as cn, Orders.orderID as oi from Customers "
+			 . "RIGHT JOIN Orders ON Customers.customerID = Orders.customerID";
 		$results = $this->executeQuery($sql);
 		$output = [];
 		foreach ($results as $result) {
@@ -241,7 +241,7 @@ class Database {
 	}
 
 	public function getProductIDFromProductName($productName){
-		$sql = "Select productID from products where productName=?";
+		$sql = "Select productID from Products where productName=?";
 		$results = $this->executeQuery($sql,array($productName));
 		foreach ($results as $result) {
 			return $result['productID'];
@@ -258,14 +258,14 @@ class Database {
 			}
 
 			$this->conn->beginTransaction();
-			$sql1 = "UPDATE ingredients SET amountInStorage = amountInStorage - " .
-					"(select ingredientAmount from productingredients " . 
-						"where productingredients.ingredientID = ingredients.ingredientID AND productingredients.productID = ?)" . 
-					" WHERE ingredientID in (select ingredientID from productingredients WHERE productID = ?)";
+			$sql1 = "UPDATE Ingredients SET amountInStorage = amountInStorage - " .
+					"(select ingredientAmount from ProductIngredients " . 
+						"where ProductIngredients.ingredientID = Ingredients.ingredientID AND ProductIngredients.productID = ?)" . 
+					" WHERE ingredientID in (select ingredientID from ProductIngredients WHERE productID = ?)";
 			$this->executeUpdate($sql1, array($productID,$productID));
 			
-			$sql2 = "SELECT count(*) as count FROM ingredients WHERE amountInStorage < 0 AND " . 
-			 		"ingredientID in (select ingredientID from productingredients WHERE productID = ?)";
+			$sql2 = "SELECT count(*) as count FROM Ingredients WHERE amountInStorage < 0 AND " . 
+			 		"ingredientID in (select ingredientID from ProductIngredients WHERE productID = ?)";
 			$negative = $this->executeQuery($sql2, array($productID));
 			
 			if($negative[0]["count"] > 0) { //Negative values => Integrity not intact
@@ -273,7 +273,7 @@ class Database {
 			} else { // Looks fine, do commit
 				$this->conn->commit();
 				
-				$sql3 = "INSERT INTO pallets (productID, orderID, currentState, creationDate) values (?,?,?,?)";
+				$sql3 = "INSERT INTO Pallets (productID, orderID, currentState, creationDate) values (?,?,?,?)";
 				$this->executeUpdate($sql3, array($productID, $orderID, $currstate, $creationDate));
 				return $this->conn->lastInsertId();
 			}
@@ -282,8 +282,8 @@ class Database {
 	}
 
 	public function getSubtractedIngredients($productID) {
-		$sql = "SELECT ingredients.ingredientID, name, (amountInStorage - ingredientAmount) as amountInStorage FROM productingredients "
-			 . "LEFT OUTER JOIN ingredients ON productingredients.ingredientID = ingredients.ingredientID "
+		$sql = "SELECT Ingredients.ingredientID, name, (amountInStorage - ingredientAmount) as amountInStorage FROM ProductIngredients "
+			 . "LEFT OUTER JOIN Ingredients ON ProductIngredients.ingredientID = Ingredients.ingredientID "
 			 . "WHERE productID = ?";
 		$result = $this->executeQuery($sql, array($productID));
 		$output = [];
