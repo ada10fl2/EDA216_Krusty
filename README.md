@@ -15,7 +15,12 @@ http://fileadmin.cs.lth.se/cs/Education/EDA216/project/dbtproject.pdf
 
 <img src='https://github.com/ada10fl2/EDA216_Project/raw/master/Krusty_Screen_3.PNG'>
 
-### Setup
+## Stack
+ * PHP 5.4
+ * MySql
+ * Ubuntu 12.04 LTS 
+
+## Setup
 Run in console
 ```sh
 sudo apt-get update
