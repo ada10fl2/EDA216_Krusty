@@ -7,3 +7,26 @@ http://fileadmin.cs.lth.se/cs/Education/EDA216/project/dbtproject.pdf
 
 ## ER Design
 <img src='https://github.com/ada10fl2/EDA216_Project/raw/master/Krusty_Design.PNG'>
+
+
+### Setup
+´´´sh
+
+sudo apt-get update
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:ondrej/php5
+sudo apt-get update
+sudo apt-get install php5
+php5 -v
+sudo service apache2 restart
+sudo nano /etc/mysql/my.cnf
+
+´´´
+
+Run ´mysql -u root -p´
+´´´mysql
+CREATE USER 'eda216'@'localhost' IDENTIFIED BY 'eda216';
+GRANT ALL PRIVILEGES ON *.* TO 'eda216'@'localhost' IDENTIFIED BY 'eda216';
+FLUSH PRIVILEGES;
+
+´´´
