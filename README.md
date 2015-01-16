@@ -4,3 +4,6 @@ This is a school project made in the course http://cs.lth.se/eda216/project/ at 
 
 ## Project Description
 http://fileadmin.cs.lth.se/cs/Education/EDA216/project/dbtproject.pdf
+
+## ER Design
+<img src='https://github.com/ada10fl2/EDA216_Project/raw/master/Krusty_Design.PNG'>
